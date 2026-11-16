@@ -24,13 +24,14 @@ Times in this early section are **UTC on November 15, 2026 as reported in the hi
 - **Rationale / qualification:** One provider-neutral library can serve both hosting patterns. This does **not** guarantee each provider on every OS or framework; later AD-019/033/034 set a qualified compatibility matrix. Earlier macOS aspirations remain qualification work, not automatic support.
 - **Related scope:** AD-019/033/034; POC-SCN-04, POC-SCN-21 (later topical links, **not original numbered trace**). No identified supersession.
 
-## AD-002 — Configuration and credential storage: original final option unresolved
+## AD-002 — Configuration and credential storage: original vote unverified, current Option A confirmed
 
 - **Problem:** Who owns configuration and credential persistence.
 - **Recovered *initial proposal* (20:56:02Z):** A pluggable storage (**recommended**); B built-in SQLite storage; C consumer-managed storage.
 - **Historical interruption/refinement:** At 21:03:52Z Jim described the existing XML/XSD/DataTable manager, central configuration, protected distributed credentials and offline caches, and requested reconsideration. At 21:04:15Z the assistant reframed the problem to separate central configuration management, credential management and client library concerns.
-- **Disposition:** The **original A/B/C final choice is not recovered**. Do **not** claim A was approved because it was recommended. The later "AD-001–033 established" handoff is evidence of the inherited program baseline, not a recovered vote on this initial proposal. Exact supersession relationship/ID remains unresolved.
-- **Related scope:** AD-006/009–013; POC-SCN-05–08. The following separate requirement must **not** be merged into AD-002 without evidence.
+- **Original historical disposition:** The **original A/B/C final choice is not recovered**. Do **not** claim A was approved at the time because it was recommended. The later "AD-001–033 established" handoff is evidence of inherited program scope, not the missing individual vote. Exact historical supersession relationship/ID remains unresolved.
+- **New owner confirmation (November 15, 2026):** Jim directly answered **“Yes”** to the explicitly enumerated recommendation to approve **AD-002 Option A, refined**: pluggable configuration storage, independently pluggable credential storage, multiple separate stores/profiles, optional built-in adapters, consumer-provided implementations, and no mandatory core SQLite dependency. This **prospectively establishes the current design** without rewriting the original record. See [AD-002 decision](AD-002-configuration-and-credential-storage.md).
+- **Related scope:** AD-006/009–013; POC-SCN-05–08. The following historically separate choice is carried forward into the new AD-002 confirmation **without reassigning its original unknown AD identifier**.
 
 ### Accepted requirement with no verified AD identifier: plural stores and profiles
 
@@ -137,9 +138,9 @@ For these IDs the indicated original extraction sections contain **problem, sele
 
 ## Historical reconciliation and unresolved evidence
 
-1. The five original conversation/charter snapshots are **unchanged**. The [three reviews](../archive/reviews/) are later, source-specific assessments of the earlier PR candidate. They sometimes disagree about what was recoverable: the final-review-only assessment could not see AD-001–003 primary evidence; the two early-conversation reviews later recovered AD-001/003 and the AD-002 *proposal*. Prefer the more direct early evidence for those IDs, but **do not invent the missing AD-002 final vote**.
+1. The five original conversation/charter snapshots are **unchanged**. The [three reviews](../archive/reviews/) are later, source-specific assessments of the earlier PR candidate. They sometimes disagree about what was recoverable: the final-review-only assessment could not see AD-001–003 primary evidence; the two early-conversation reviews later recovered AD-001/003 and the AD-002 *proposal*. Prefer the more direct early evidence for those IDs, but **do not invent the missing original AD-002 vote**. The dated [current AD-002 confirmation](AD-002-configuration-and-credential-storage.md) is a separate approval event.
 2. AD-004/005/006/007A/007B/007C/008 original alternative sets are **abbreviated descriptions recovered by reviewers**. They do not warrant claiming their full original proposal text is preserved.
-3. No subsequent source shows formal repeal of early AD-001/003–008. Later security, consistency and compatibility decisions **qualify** them; the initial AD-002 storage proposal was re-framed, but a precise formal supersession ID cannot be verified.
+3. No subsequent source shows formal repeal of early AD-001/003–008. Later security, consistency and compatibility decisions **qualify** them; the initial AD-002 storage proposal was re-framed, but a precise formal historical supersession ID cannot be verified. The owner's **new dated refined Option A confirmation** establishes the prospective design.
 4. [Historical EXP and approved POC traceability](../requirements/experiment-traceability.md) distinguishes original scenario ID namespaces, thematic reconstructions, coverage and deferrals. Neither a documented proposal nor a later general charter approval counts as an executed test or a retroactive exact earlier user quote.
-5. **Open evidence debt:** locate original AD-002 final decision message, original EXP-001 charter and original EXP-002 full scenario-ID-to-text mapping; prove simultaneous multiple-store/multiple-profile behavior, authorized raw-export constraints, and deferred EXP-003/004 cases in later gated increments.
+5. **Open historical evidence debt:** locate original AD-002 vote if available (the current choice is approved separately), original EXP-001 charter and original EXP-002 full scenario-ID-to-text mapping; prove simultaneous multiple-store/multiple-profile behavior, authorized raw-export constraints, and deferred EXP-003/004 cases in later gated increments.
 
