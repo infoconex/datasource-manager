@@ -1,51 +1,43 @@
 # AD-006 — Multiple provider connection authentication strategies
 
 **Status:** Approved in the carried-forward architecture baseline  
-**Approval class:** Direct user numbered Option C approval.  
-**Historical source limitation:** The recovered early evidence is reported in retrospective conversation reviews; the earlier abbreviated discovery extraction did not contain the complete AD-001–AD-008 original messages.  
-**Implementation state:** Decision only; experiments remain unexecuted.
+**Approval basis:** Direct user numbered Option C approval.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 Provider protocols and deployment environments need different authentication mechanisms.
+
+## Decision
+
+Option C: Per-profile connection authentication selection, separate from credential-store abstractions.
 
 ## Alternatives considered
 
 A centrally managed credentials; B individual identity-based connections; C per-profile selection among multiple strategies.
 
-## Selected approach
-
-Option C: Per-profile connection authentication selection, separate from credential-store abstractions.
-
 ## Rationale
 
-Selection is constrained by provider, OS/framework capabilities, identity and organizational policy; the listed mechanisms are **not promises of universal support**. Credential *store* and authentication *strategy* are distinct abstractions.
+SQL, file-transfer, messaging and network-share providers have different authentication capabilities. Choosing an authentication strategy per profile avoids pretending one mechanism is supported by every driver while keeping stored secret material independent of the way it is presented.
 
-## Consequences and limits
+## Consequences and limitations
 
-Implementation must honor the risk and capability qualifications stated above and in the subsequently approved security, routing, and compatibility decisions. No unexecuted test is counted as verification.
+- Adapters must check the selected strategy against their actual provider, runtime, OS and policy capabilities.
+- A credential-store implementation does not dictate a single provider authentication scheme.
+- An unavailable required authentication mechanism must be reported, not silently replaced by a weaker one.
 
-## Approval evidence
+## Traceability
 
-At 22:09:57Z Jim stated: “I approve Architecture Decision 6, Option C: multiple authentication strategies per connection profile, including shared credentials, user-specific credentials, integrated authentication, certificates, and passwordless identities where supported. Keep authentication strategies separate from credential stores and enforce security policies. Continue architecture discovery.” **Class:** direct numbered Option C.
+**Approval history:** At 22:09:57Z Jim stated: “I approve Architecture Decision 6, Option C: multiple authentication strategies per connection profile, including shared credentials, user-specific credentials, integrated authentication, certificates, and passwordless identities where supported. Keep authentication strategies separate from credential stores and enforce security policies. Continue architecture discovery.” **Class:** direct numbered Option C.
 
-**Classification:** Direct user numbered Option C approval.
+**Requirements and scenarios:** AD-011–013; POC-SCN-07/08/12; EXP-003 SCN-008. Later lifecycle decisions refine.
 
-## Related requirements and acceptance scenarios
+**Historical evidence limit:** The recovered early evidence is reported in retrospective conversation reviews; the earlier abbreviated discovery extraction did not contain the complete AD-001–AD-008 original messages.  
 
-AD-011–013; POC-SCN-07/08/12; EXP-003 SCN-008. Later lifecycle decisions refine.
-
-This is a topical relationship, not proof of a recovered original numbered test mapping. See [POC-001](../requirements/POC-001.md) and [historical experiment traceability](../requirements/experiment-traceability.md).
-
-## Related decisions and supersession
-
-AD-011–013; POC-SCN-07/08/12; EXP-003 SCN-008. Later lifecycle decisions refine.
-
-No later source documents a formal repeal of this decision. The cited decisions refine or limit its application; original user wording is not silently rewritten.
-
-## Evidence sources
-
+**Sources:**
 - [Recovered early approval evidence](decision-evidence.md)
 - [Original abbreviated architecture discovery](../archive/conversations/architecture-discovery.md) (does **not** include the complete early transcripts)
 - [Early architecture history review](../archive/reviews/early-architecture-history-review.md) (retrospective source-specific recovery)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)

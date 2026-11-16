@@ -6,6 +6,8 @@
 
 ## Reading approvals accurately
 
+Individual ADR titles are editorial descriptions, not necessarily historical verbatim headings. Decision-specific rationale and consequence text explains the approved scope; the preserved source records remain authoritative for original wording and approval evidence.
+
 - **Direct numbered approval:** Jim explicitly named the decision ID and selected option.
 - **User-selected + assistant-recorded:** Jim stated the requirement/choice and the immediate assistant response labeled the numbered decision approved; not an invented direct "I approve" vote.
 - **Direct requirement + assistant-recorded:** user made an explicit product requirement; assistant assigned it to a numbered decision, but no original numbered vote was recovered.

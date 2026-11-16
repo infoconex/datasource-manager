@@ -1,52 +1,42 @@
 # AD-017 — Durable emergency audit
 
 **Status:** Approved in the architectural baseline; direct numbered Option C approval  
-**Approval evidence class:** Direct numbered Option C user approval recovered in conversation extraction.  
-**Decision title:** Editorial reconstruction from the approved architecture discussion; not asserted to be the exact historical heading.  
-**Implementation state:** Architectural plan only; no POC work executed as evidence of this decision.
+**Approval basis:** Direct numbered Option C user approval recovered in conversation extraction.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 Preventing emergency access without a reliable accountability record while offline.
+
+## Decision
+
+Protected, durable local recording of critical emergency events **before** access; fail closed if required persistence unavailable; idempotent online reconciliation; operational telemetry separately governed.
 
 ## Alternatives considered
 
 Options A/B unavailable.
 
-When the source reports missing original alternatives, no additional options are inferred.
-
-## Selected approach
-
-Protected, durable local recording of critical emergency events **before** access; fail closed if required persistence unavailable; idempotent online reconciliation; operational telemetry separately governed.
-
 ## Rationale
 
-An emergency authorization must not outlive or bypass its audit evidence (analytical summary).
+If emergency access is allowed while offline, a best-effort remote audit exporter cannot be its sole record. Recording the critical event durably before use makes audit a prerequisite to exceptional authority.
 
-## Consequences and security/compatibility limits
+## Consequences and limitations
 
-The selected approach is bounded by the recorded rationale and refinements, applicable organizational/security policy, provider capabilities, and the [approved architecture charter](../archive/charters/architecture-and-poc-execution-charter.md). Documented acceptance scenarios remain unexecuted; no broader guarantee is asserted.
+- Required protected local audit persistence must succeed before emergency access is granted; failure is fail-closed.
+- Offline records reconcile idempotently after reconnection, preserving security-event accountability.
+- Optional operational telemetry cannot substitute for the mandatory security audit record.
 
-## Approval and historical evidence
+## Traceability
 
-“I approve Architecture Decision 17, Option C: require durable protected local recording of security-critical emergency-access events before granting access, fail closed when required persistence is unavailable, reconcile idempotently when online, and keep ordinary operational telemetry separately governed.”
+**Approval history:** “I approve Architecture Decision 17, Option C: require durable protected local recording of security-critical emergency-access events before granting access, fail closed when required persistence is unavailable, reconcile idempotently when online, and keep ordinary operational telemetry separately governed.”
 
-**Evidence classification:** Direct numbered Option C user approval recovered in conversation extraction.
+**Requirements and scenarios:** EXP-002-D; EXP-003 SCN-020 later tests audit/telemetry separation.
 
-## Related requirements and acceptance scenarios
+**Related decisions and refinements:** Decision 26 retains independent telemetry and no collector dependence.
 
-EXP-002-D; EXP-003 SCN-020 later tests audit/telemetry separation.
-
-The references above reflect the historical summary; for [POC-001 exact acceptance criteria](../requirements/POC-001.md) and conservative experimental mapping see [experiment traceability](../requirements/experiment-traceability.md). A scenario reference is planning traceability, not a test pass.
-
-## Related decisions and supersession
-
-Decision 26 retains independent telemetry and no collector dependence.
-
-Unless the text above explicitly states a revision, no separate formally numbered superseding decision is evidenced by this source. Later decisions may narrow capabilities without repealing the selected architecture.
-
-## Evidence source
-
+**Sources:**
 - [Architecture discovery, original AD-017 extraction, lines 198–207](../archive/conversations/architecture-discovery.md#L198-L207)
 - [Cross-decision approval classification](decision-evidence.md)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)

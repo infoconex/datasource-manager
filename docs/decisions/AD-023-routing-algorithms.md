@@ -1,52 +1,42 @@
 # AD-023 — Routing algorithms
 
 **Status:** Approved in the architectural baseline; direct numbered Option C approval  
-**Approval evidence class:** Direct numbered Option C user approval recovered in conversation extraction.  
-**Decision title:** Editorial reconstruction from the approved architecture discussion; not asserted to be the exact historical heading.  
-**Implementation state:** Architectural plan only; no POC work executed as evidence of this decision.
+**Approval basis:** Direct numbered Option C user approval recovered in conversation extraction.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 How much endpoint selection belongs to library-managed routing.
+
+## Decision
+
+Extensible provider-neutral policies, provider-native first; initial library-managed priority failover, round-robin, weighted round-robin, and locally scoped least-active only where suitable; defer adaptive/sharding.
 
 ## Alternatives considered
 
 Options A/B unavailable.
 
-When the source reports missing original alternatives, no additional options are inferred.
-
-## Selected approach
-
-Extensible provider-neutral policies, provider-native first; initial library-managed priority failover, round-robin, weighted round-robin, and locally scoped least-active only where suitable; defer adaptive/sharding.
-
 ## Rationale
 
-Addresses common routing needs without advanced balancing systems (analytical summary).
+Provider-native selection is preferable when it understands the topology. A small configurable set of library algorithms covers ordinary failover and balancing without claiming to solve consistency, sharding or adaptive optimization.
 
-## Consequences and security/compatibility limits
+## Consequences and limitations
 
-The selected approach is bounded by the recorded rationale and refinements, applicable organizational/security policy, provider capabilities, and the [approved architecture charter](../archive/charters/architecture-and-poc-execution-charter.md). Documented acceptance scenarios remain unexecuted; no broader guarantee is asserted.
+- Initial library-managed options are priority failover, round-robin, weighted round-robin and suitable locally scoped least-active selection.
+- A policy or provider may disallow an algorithm if its semantics cannot be respected.
+- Adaptive balancing and sharding remain deferred, and AD-024 governs replica consistency regardless of routing algorithm.
 
-## Approval and historical evidence
+## Traceability
 
-“I approve Architecture Decision 23, Option C: extensible provider-neutral routing policies, provider-native selection first, and initial library-managed priority failover, round-robin, weighted round-robin, and locally scoped least-active selection only where appropriate. Defer advanced adaptive and sharding strategies.”
+**Approval history:** “I approve Architecture Decision 23, Option C: extensible provider-neutral routing policies, provider-native selection first, and initial library-managed priority failover, round-robin, weighted round-robin, and locally scoped least-active selection only where appropriate. Defer advanced adaptive and sharding strategies.”
 
-**Evidence classification:** Direct numbered Option C user approval recovered in conversation extraction.
+**Requirements and scenarios:** EXP-003 SCN-001–003.
 
-## Related requirements and acceptance scenarios
+**Related decisions and refinements:** Decision 24 constrains eligible destinations by consistency and authorization.
 
-EXP-003 SCN-001–003.
-
-The references above reflect the historical summary; for [POC-001 exact acceptance criteria](../requirements/POC-001.md) and conservative experimental mapping see [experiment traceability](../requirements/experiment-traceability.md). A scenario reference is planning traceability, not a test pass.
-
-## Related decisions and supersession
-
-Decision 24 constrains eligible destinations by consistency and authorization.
-
-Unless the text above explicitly states a revision, no separate formally numbered superseding decision is evidenced by this source. Later decisions may narrow capabilities without repealing the selected architecture.
-
-## Evidence source
-
+**Sources:**
 - [Architecture discovery, original AD-023 extraction, lines 258–267](../archive/conversations/architecture-discovery.md#L258-L267)
 - [Cross-decision approval classification](decision-evidence.md)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)

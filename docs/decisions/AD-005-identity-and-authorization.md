@@ -1,51 +1,43 @@
 # AD-005 — Requester identity and organization/profile authorization
 
 **Status:** Approved in the carried-forward architecture baseline  
-**Approval class:** Direct user numbered Option C approval.  
-**Historical source limitation:** The recovered early evidence is reported in retrospective conversation reviews; the earlier abbreviated discovery extraction did not contain the complete AD-001–AD-008 original messages.  
-**Implementation state:** Decision only; experiments remain unexecuted.
+**Approval basis:** Direct user numbered Option C approval.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 Distinguish user, application and combined identity requirements for acquisition.
+
+## Decision
+
+Option C: Requesting user identity, application/workload identity, or both when required by organization and profile authorization.
 
 ## Alternatives considered
 
 A user identity (OIDC/OAuth2); B application/workload identity; C policy-driven user identity, application identity, or **both**.
 
-## Selected approach
-
-Option C: Requesting user identity, application/workload identity, or both when required by organization and profile authorization.
-
 ## Rationale
 
-Requester authorization at organization and profile levels is separate from credentials used to authenticate to SQL/SFTP/etc. under AD-006. Do not imply a single universal authorization identity.
+The requesting principal varies by application: some operations are authorized for a person, others for a workload, and some require both. That authorization must be evaluated against organization and profile policy independently of the credentials used at the destination.
 
-## Consequences and limits
+## Consequences and limitations
 
-Implementation must honor the risk and capability qualifications stated above and in the subsequently approved security, routing, and compatibility decisions. No unexecuted test is counted as verification.
+- The acquisition contract needs to represent user identity, workload identity, or both without silently substituting one for another.
+- Authorization failure remains distinct from SQL, SFTP or other provider authentication failure.
+- Provider credentials cannot serve as proof that the requester is entitled to use a profile.
 
-## Approval evidence
+## Traceability
 
-At 22:08:24Z Jim stated: “I approve Architecture Decision 5, Option C: policy-driven authentication supporting user identity, application identity, and both when required. Keep authentication provider-neutral and enforce organization and profile authorization.” **Class:** direct numbered Option C.
+**Approval history:** At 22:08:24Z Jim stated: “I approve Architecture Decision 5, Option C: policy-driven authentication supporting user identity, application identity, and both when required. Keep authentication provider-neutral and enforce organization and profile authorization.” **Class:** direct numbered Option C.
 
-**Classification:** Direct user numbered Option C approval.
+**Requirements and scenarios:** EXP-004 capability authorization; POC-SCN-07. AD-006/009/011/029 specialize, not supersede.
 
-## Related requirements and acceptance scenarios
+**Historical evidence limit:** The recovered early evidence is reported in retrospective conversation reviews; the earlier abbreviated discovery extraction did not contain the complete AD-001–AD-008 original messages.  
 
-EXP-004 capability authorization; POC-SCN-07. AD-006/009/011/029 specialize, not supersede.
-
-This is a topical relationship, not proof of a recovered original numbered test mapping. See [POC-001](../requirements/POC-001.md) and [historical experiment traceability](../requirements/experiment-traceability.md).
-
-## Related decisions and supersession
-
-EXP-004 capability authorization; POC-SCN-07. AD-006/009/011/029 specialize, not supersede.
-
-No later source documents a formal repeal of this decision. The cited decisions refine or limit its application; original user wording is not silently rewritten.
-
-## Evidence sources
-
+**Sources:**
 - [Recovered early approval evidence](decision-evidence.md)
 - [Original abbreviated architecture discovery](../archive/conversations/architecture-discovery.md) (does **not** include the complete early transcripts)
 - [Early architecture history review](../archive/reviews/early-architecture-history-review.md) (retrospective source-specific recovery)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)

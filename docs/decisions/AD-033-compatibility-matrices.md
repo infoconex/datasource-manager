@@ -1,52 +1,42 @@
 # AD-033 — Compatibility matrices
 
 **Status:** Selected by assistant under owner's blanket delegation; later carried forward  
-**Approval evidence class:** Assistant-selected under delegated autonomy; **not** an item-specific owner approval.  
-**Decision title:** Editorial reconstruction from the approved architecture discussion; not asserted to be the exact historical heading.  
-**Implementation state:** Architectural plan only; no POC work executed as evidence of this decision.
+**Approval basis:** Assistant-selected under delegated autonomy; **not** an item-specific owner approval.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 Avoiding false claims that all operating systems, target frameworks, and providers support identical features.
+
+## Decision
+
+Explicit framework/OS/provider capability matrices; unsupported security requirements fail closed.
 
 ## Alternatives considered
 
 Not presented to user; no option letter.
 
-When the source reports missing original alternatives, no additional options are inferred.
-
-## Selected approach
-
-Explicit framework/OS/provider capability matrices; unsupported security requirements fail closed.
-
 ## Rationale
 
-Compatibility must be verified against provider and platform reality (analytical summary).
+The existence of a common .NET API cannot establish that every provider, OS and framework supplies the same native libraries or security mechanisms. Maintaining explicit qualification evidence prevents broad marketing claims from masking unsupported combinations.
 
-## Consequences and security/compatibility limits
+## Consequences and limitations
 
-The selected approach is bounded by the recorded rationale and refinements, applicable organizational/security policy, provider capabilities, and the [approved architecture charter](../archive/charters/architecture-and-poc-execution-charter.md). Documented acceptance scenarios remain unexecuted; no broader guarantee is asserted.
+- Supported provider/OS/framework combinations and their feature limits must be recorded and validated independently.
+- A required security feature that lacks a verified implementation fails closed.
+- Matrix maintenance is an ongoing cost as frameworks, operating systems and provider drivers change; AD-034 narrows the officially supported runtime baseline.
 
-## Approval and historical evidence
+## Traceability
 
-Assistant-selected under blanket delegation; **not individually ratified**.
+**Approval history:** Assistant-selected under blanket delegation; **not individually ratified**.
 
-**Evidence classification:** Assistant-selected under delegated autonomy; **not** an item-specific owner approval.
+**Requirements and scenarios:** EXP-004 SCN-016–020.
 
-## Related requirements and acceptance scenarios
+**Related decisions and refinements:** Extends, does not supersede, Decision 19.
 
-EXP-004 SCN-016–020.
-
-The references above reflect the historical summary; for [POC-001 exact acceptance criteria](../requirements/POC-001.md) and conservative experimental mapping see [experiment traceability](../requirements/experiment-traceability.md). A scenario reference is planning traceability, not a test pass.
-
-## Related decisions and supersession
-
-Extends, does not supersede, Decision 19.
-
-Unless the text above explicitly states a revision, no separate formally numbered superseding decision is evidenced by this source. Later decisions may narrow capabilities without repealing the selected architecture.
-
-## Evidence source
-
+**Sources:**
 - [Architecture discovery, original AD-033 extraction, lines 358–367](../archive/conversations/architecture-discovery.md#L358-L367)
 - [Cross-decision approval classification](decision-evidence.md)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)

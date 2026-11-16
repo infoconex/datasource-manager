@@ -1,52 +1,42 @@
 # AD-025 — Coordinated resilience, without Polly
 
 **Status:** Approved in the carried-forward baseline; conversational assent to revised Option C  
-**Approval evidence class:** Conversational assent after user rejected Polly; **not a direct numbered user vote**.  
-**Decision title:** Editorial reconstruction from the approved architecture discussion; not asserted to be the exact historical heading.  
-**Implementation state:** Architectural plan only; no POC work executed as evidence of this decision.
+**Approval basis:** Conversational assent after user rejected Polly; **not a direct numbered user vote**.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 Preventing duplicate provider/library retries, cascading load, and missed timeouts while preserving a dependency-free core.
+
+## Decision
+
+Revised Option C; no broad operation replay; no unsafe consistency downgrade; no dependency on Polly. Optional provider drivers isolated from dependency-free core.
 
 ## Alternatives considered
 
 **A** provider-managed retry/timeouts exclusively (consistent core API harder); **B** library-managed retry with configurable provider retries disabled (some provider behavior opaque); **C** coordinated hybrid with one bounded logical acquisition deadline, per-acquisition attempt cap, aggregate retry budget, jitter, transient classification, concurrency/breaker coordination, and conservative outer retries. After a user objection, the recommendation was **revised C** using standard .NET and provider-native mechanisms, with no Polly or other third-party resilience framework.
 
-When the source reports missing original alternatives, no additional options are inferred.
-
-## Selected approach
-
-Revised Option C; no broad operation replay; no unsafe consistency downgrade; no dependency on Polly. Optional provider drivers isolated from dependency-free core.
-
 ## Rationale
 
-Bounded predictable resilience without building or importing a general-purpose resilience framework (analytical summary).
+A driver and outer library may both retry, multiplying attempts and prolonging an outage if budgets are independent. Coordinating logical deadlines, attempt caps and transient classification provides bounded resilience using standard .NET and provider-native mechanisms without adding Polly or a general-purpose resilience framework.
 
-## Consequences and security/compatibility limits
+## Consequences and limitations
 
-The selected approach is bounded by the recorded rationale and refinements, applicable organizational/security policy, provider capabilities, and the [approved architecture charter](../archive/charters/architecture-and-poc-execution-charter.md). Documented acceptance scenarios remain unexecuted; no broader guarantee is asserted.
+- One logical acquisition budget must account for inner provider behavior, outer attempts, jitter, concurrency and breaker state.
+- Some provider retries are opaque; the library must document and test the limits of coordinating them rather than assert complete control.
+- The dependency-free core does not replay unsafe operations or relax routing consistency to recover availability.
 
-## Approval and historical evidence
+## Traceability
 
-User said “I don’t want to take a dependency on a 3rd party library like Polly”; later asked “Is Polly a Microsoft library?”; after the assistant recommended the dependency-free approach, user replied **“Agreed.”** The next assistant message interpreted that as approval: “Architecture Decision 25 is approved in its revised form.” **No user message explicitly states “I approve Architecture Decision 25, Option C.”**
+**Approval history:** User said “I don’t want to take a dependency on a 3rd party library like Polly”; later asked “Is Polly a Microsoft library?”; after the assistant recommended the dependency-free approach, user replied **“Agreed.”** The next assistant message interpreted that as approval: “Architecture Decision 25 is approved in its revised form.” **No user message explicitly states “I approve Architecture Decision 25, Option C.”**
 
-**Evidence classification:** Conversational assent after user rejected Polly; **not a direct numbered user vote**.
+**Requirements and scenarios:** EXP-003 SCN-006–011.
 
-## Related requirements and acceptance scenarios
+**Related decisions and refinements:** **Material revision within Decision 25:** Polly and `Microsoft.Extensions.Resilience`-as-Polly-wrapper removed from the core recommendation. This is not a reversal of Decision 20.
 
-EXP-003 SCN-006–011.
-
-The references above reflect the historical summary; for [POC-001 exact acceptance criteria](../requirements/POC-001.md) and conservative experimental mapping see [experiment traceability](../requirements/experiment-traceability.md). A scenario reference is planning traceability, not a test pass.
-
-## Related decisions and supersession
-
-**Material revision within Decision 25:** Polly and `Microsoft.Extensions.Resilience`-as-Polly-wrapper removed from the core recommendation. This is not a reversal of Decision 20.
-
-Unless the text above explicitly states a revision, no separate formally numbered superseding decision is evidenced by this source. Later decisions may narrow capabilities without repealing the selected architecture.
-
-## Evidence source
-
+**Sources:**
 - [Architecture discovery, original AD-025 extraction, lines 278–287](../archive/conversations/architecture-discovery.md#L278-L287)
 - [Cross-decision approval classification](decision-evidence.md)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)

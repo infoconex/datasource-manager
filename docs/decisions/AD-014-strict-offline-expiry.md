@@ -1,52 +1,42 @@
 # AD-014 — Normal offline expiry and emergency exception
 
 **Status:** Approved in the architectural baseline; direct numbered Option C approval  
-**Approval evidence class:** Direct numbered Option C user approval recovered in conversation extraction.  
-**Decision title:** Editorial reconstruction from the approved architecture discussion; not asserted to be the exact historical heading.  
-**Implementation state:** Architectural plan only; no POC work executed as evidence of this decision.
+**Approval basis:** Direct numbered Option C user approval recovered in conversation extraction.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 Offline authorization after its normal expiry and exceptional continuity needs.
+
+## Decision
+
+Strict normal authorization expiry; separately provisioned, optional, time-bounded, audited emergency access for eligible managed systems; no implicit grace; conservative customer-owned defaults.
 
 ## Alternatives considered
 
 Options A/B unavailable.
 
-When the source reports missing original alternatives, no additional options are inferred.
-
-## Selected approach
-
-Strict normal authorization expiry; separately provisioned, optional, time-bounded, audited emergency access for eligible managed systems; no implicit grace; conservative customer-owned defaults.
-
 ## Rationale
 
-Emergency access cannot silently extend ordinary authorization (analytical summary).
+An implicit offline grace period would extend normal authority without a fresh security decision. Emergency continuity is therefore a separate, pre-provisioned and time-limited authorization path with audit requirements and stricter device eligibility.
 
-## Consequences and security/compatibility limits
+## Consequences and limitations
 
-The selected approach is bounded by the recorded rationale and refinements, applicable organizational/security policy, provider capabilities, and the [approved architecture charter](../archive/charters/architecture-and-poc-execution-charter.md). Documented acceptance scenarios remain unexecuted; no broader guarantee is asserted.
+- Expired normal authorization fails; cached configuration does not create a grace period.
+- Eligible managed systems may receive explicitly provisioned, audited emergency access with its own expiry and bounds.
+- Customer-owned devices retain conservative defaults and cannot gain emergency rights by simply being offline.
 
-## Approval and historical evidence
+## Traceability
 
-“I approve Architecture Decision 14, Option C: strict normal offline authorization expiry with a separate, optional, explicitly provisioned, time-bounded and audited emergency-access capability for eligible managed systems. No implicit grace period; conservative customer-owned defaults.”
+**Approval history:** “I approve Architecture Decision 14, Option C: strict normal offline authorization expiry with a separate, optional, explicitly provisioned, time-bounded and audited emergency-access capability for eligible managed systems. No implicit grace period; conservative customer-owned defaults.”
 
-**Evidence classification:** Direct numbered Option C user approval recovered in conversation extraction.
+**Requirements and scenarios:** EXP-002-B and EXP-002-D; exact SCN mappings unavailable.
 
-## Related requirements and acceptance scenarios
+**Related decisions and refinements:** Decisions 16–18 define activation, audit durability, and trusted expiration validation.
 
-EXP-002-B and EXP-002-D; exact SCN mappings unavailable.
-
-The references above reflect the historical summary; for [POC-001 exact acceptance criteria](../requirements/POC-001.md) and conservative experimental mapping see [experiment traceability](../requirements/experiment-traceability.md). A scenario reference is planning traceability, not a test pass.
-
-## Related decisions and supersession
-
-Decisions 16–18 define activation, audit durability, and trusted expiration validation.
-
-Unless the text above explicitly states a revision, no separate formally numbered superseding decision is evidenced by this source. Later decisions may narrow capabilities without repealing the selected architecture.
-
-## Evidence source
-
+**Sources:**
 - [Architecture discovery, original AD-014 extraction, lines 168–177](../archive/conversations/architecture-discovery.md#L168-L177)
 - [Cross-decision approval classification](decision-evidence.md)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)

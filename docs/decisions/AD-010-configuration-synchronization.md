@@ -1,52 +1,42 @@
 # AD-010 — Configuration synchronization
 
 **Status:** Approved in the architectural baseline; direct numbered Option C approval  
-**Approval evidence class:** Direct numbered Option C user approval recovered in conversation extraction.  
-**Decision title:** Editorial reconstruction from the approved architecture discussion; not asserted to be the exact historical heading.  
-**Implementation state:** Architectural plan only; no POC work executed as evidence of this decision.
+**Approval basis:** Direct numbered Option C user approval recovered in conversation extraction.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 Keeping local configuration consistent through disconnections and updates.
+
+## Decision
+
+Version-aware polling as reliable sync; optional push notifications trigger refresh; atomic activation and offline reconciliation.
 
 ## Alternatives considered
 
 Options A/B unavailable.
 
-When the source reports missing original alternatives, no additional options are inferred.
-
-## Selected approach
-
-Version-aware polling as reliable sync; optional push notifications trigger refresh; atomic activation and offline reconciliation.
-
 ## Rationale
 
-Polling is the dependable mechanism while push improves timeliness (analytical summary).
+A polling baseline works even when a push channel disconnects or notifications are missed. Push events can shorten update latency, but a versioned refresh and atomic activation are necessary to avoid applying partial or older policy.
 
-## Consequences and security/compatibility limits
+## Consequences and limitations
 
-The selected approach is bounded by the recorded rationale and refinements, applicable organizational/security policy, provider capabilities, and the [approved architecture charter](../archive/charters/architecture-and-poc-execution-charter.md). Documented acceptance scenarios remain unexecuted; no broader guarantee is asserted.
+- Updates must be version-aware and activate atomically; an older or partial configuration cannot replace a newer complete one.
+- Push notifications trigger re-fetch rather than becoming the sole source of truth.
+- Offline clients continue with only the previously authorized and valid local state, then reconcile when connectivity returns.
 
-## Approval and historical evidence
+## Traceability
 
-“I approve Architecture Decision 10, Option C: version-aware polling as the reliable synchronization mechanism, with optional push notifications that trigger refresh, atomic configuration activation, and offline reconciliation.”
+**Approval history:** “I approve Architecture Decision 10, Option C: version-aware polling as the reliable synchronization mechanism, with optional push notifications that trigger refresh, atomic configuration activation, and offline reconciliation.”
 
-**Evidence classification:** Direct numbered Option C user approval recovered in conversation extraction.
+**Requirements and scenarios:** Version monotonicity, atomic cache activation, reconciliation; EXP-001. Exact SCNs unavailable.
 
-## Related requirements and acceptance scenarios
+**Related decisions and refinements:** Decision 12 requires secret-version refresh; no supersession.
 
-Version monotonicity, atomic cache activation, reconciliation; EXP-001. Exact SCNs unavailable.
-
-The references above reflect the historical summary; for [POC-001 exact acceptance criteria](../requirements/POC-001.md) and conservative experimental mapping see [experiment traceability](../requirements/experiment-traceability.md). A scenario reference is planning traceability, not a test pass.
-
-## Related decisions and supersession
-
-Decision 12 requires secret-version refresh; no supersession.
-
-Unless the text above explicitly states a revision, no separate formally numbered superseding decision is evidenced by this source. Later decisions may narrow capabilities without repealing the selected architecture.
-
-## Evidence source
-
+**Sources:**
 - [Architecture discovery, original AD-010 extraction, lines 128–137](../archive/conversations/architecture-discovery.md#L128-L137)
 - [Cross-decision approval classification](decision-evidence.md)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)

@@ -1,52 +1,42 @@
 # AD-016 — Emergency activation
 
 **Status:** Approved in the architectural baseline; direct numbered Option C approval  
-**Approval evidence class:** Direct numbered Option C user approval recovered in conversation extraction.  
-**Decision title:** Editorial reconstruction from the approved architecture discussion; not asserted to be the exact historical heading.  
-**Implementation state:** Architectural plan only; no POC work executed as evidence of this decision.
+**Approval basis:** Direct numbered Option C user approval recovered in conversation extraction.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 Authorizing emergency access when normal authorization has expired or control plane is unavailable.
+
+## Decision
+
+Online authorization preferred; explicitly pre-authorized operator-activated offline access and separately approved service-specific automated modes on eligible managed devices; no automatic conversion of expired normal authorization; device binding, limits, expiry, audit; conservative customer-owned defaults.
 
 ## Alternatives considered
 
 Options A/B unavailable.
 
-When the source reports missing original alternatives, no additional options are inferred.
-
-## Selected approach
-
-Online authorization preferred; explicitly pre-authorized operator-activated offline access and separately approved service-specific automated modes on eligible managed devices; no automatic conversion of expired normal authorization; device binding, limits, expiry, audit; conservative customer-owned defaults.
-
 ## Rationale
 
-Constrains exceptional authority to intentionally provisioned cases (analytical summary).
+Loss of connectivity cannot itself grant new privileges. An emergency mode must be authorized and constrained in advance, with separate treatment for operator invocation and service-specific automation.
 
-## Consequences and security/compatibility limits
+## Consequences and limitations
 
-The selected approach is bounded by the recorded rationale and refinements, applicable organizational/security policy, provider capabilities, and the [approved architecture charter](../archive/charters/architecture-and-poc-execution-charter.md). Documented acceptance scenarios remain unexecuted; no broader guarantee is asserted.
+- Offline activation is limited to deliberately pre-authorized grants bound to an eligible managed device and explicit limits.
+- Service-automated emergency use needs its own approval; expiry of ordinary access never converts automatically to emergency access.
+- Activation requires enforceable expiry and audit, with conservative customer-owned defaults.
 
-## Approval and historical evidence
+## Traceability
 
-“I approve Architecture Decision 16, Option C: policy-driven emergency activation, preferring online authorization, allowing explicitly pre-authorized operator-activated offline access and separately approved service-specific automated emergency modes on eligible managed systems. No automatic conversion of expired normal authorization, with device binding, limited scope, expiration and auditing. Conservative customer-owned defaults.”
+**Approval history:** “I approve Architecture Decision 16, Option C: policy-driven emergency activation, preferring online authorization, allowing explicitly pre-authorized operator-activated offline access and separately approved service-specific automated emergency modes on eligible managed systems. No automatic conversion of expired normal authorization, with device binding, limited scope, expiration and auditing. Conservative customer-owned defaults.”
 
-**Evidence classification:** Direct numbered Option C user approval recovered in conversation extraction.
+**Requirements and scenarios:** EXP-002-D; exact SCN mapping unavailable.
 
-## Related requirements and acceptance scenarios
+**Related decisions and refinements:** Decisions 17–18 impose durable audit and time evidence.
 
-EXP-002-D; exact SCN mapping unavailable.
-
-The references above reflect the historical summary; for [POC-001 exact acceptance criteria](../requirements/POC-001.md) and conservative experimental mapping see [experiment traceability](../requirements/experiment-traceability.md). A scenario reference is planning traceability, not a test pass.
-
-## Related decisions and supersession
-
-Decisions 17–18 impose durable audit and time evidence.
-
-Unless the text above explicitly states a revision, no separate formally numbered superseding decision is evidenced by this source. Later decisions may narrow capabilities without repealing the selected architecture.
-
-## Evidence source
-
+**Sources:**
 - [Architecture discovery, original AD-016 extraction, lines 188–197](../archive/conversations/architecture-discovery.md#L188-L197)
 - [Cross-decision approval classification](decision-evidence.md)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)

@@ -1,52 +1,42 @@
 # AD-020 — Retry scope
 
 **Status:** Approved in the architectural baseline; direct numbered Option C approval  
-**Approval evidence class:** Direct numbered Option C user approval recovered in conversation extraction.  
-**Decision title:** Editorial reconstruction from the approved architecture discussion; not asserted to be the exact historical heading.  
-**Implementation state:** Architectural plan only; no POC work executed as evidence of this decision.
+**Approval basis:** Direct numbered Option C user approval recovered in conversation extraction.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 Which failures and operations Data Source Manager may retry without replaying side effects.
+
+## Decision
+
+Focused connection-acquisition retries; optional provider-aware operation-level resilience only for explicitly safe operations; no blind transaction/write/transfer/message replay; coordinate budgets and breakers.
 
 ## Alternatives considered
 
 Options A/B unavailable.
 
-When the source reports missing original alternatives, no additional options are inferred.
-
-## Selected approach
-
-Focused connection-acquisition retries; optional provider-aware operation-level resilience only for explicitly safe operations; no blind transaction/write/transfer/message replay; coordinate budgets and breakers.
-
 ## Rationale
 
-Connection acquisition and business operations have materially different repeatability risk (analytical summary).
+Connection acquisition failures can often be retried within a bounded policy, whereas repeating a transaction, file transfer or message may duplicate irreversible effects. Keeping the core focused on acquisition avoids making application-level idempotency assumptions.
 
-## Consequences and security/compatibility limits
+## Consequences and limitations
 
-The selected approach is bounded by the recorded rationale and refinements, applicable organizational/security policy, provider capabilities, and the [approved architecture charter](../archive/charters/architecture-and-poc-execution-charter.md). Documented acceptance scenarios remain unexecuted; no broader guarantee is asserted.
+- Acquisition retries are bounded and coordinate with provider retry budgets and circuit breakers.
+- Operation-level resilience is optional and only applies when provider-aware evidence establishes that an operation is safe to repeat.
+- Uncertain write, transaction, transfer or message outcomes are surfaced; the manager does not replay them blindly.
 
-## Approval and historical evidence
+## Traceability
 
-“I approve Architecture Decision 20, Option C: a focused connection-management core with bounded connection-acquisition retries, plus optional provider-aware operation-level resilience only for explicitly safe operations. No blind transaction, write, transfer, or message replay; coordinate retry budgets and circuit breakers across layers.”
+**Approval history:** “I approve Architecture Decision 20, Option C: a focused connection-management core with bounded connection-acquisition retries, plus optional provider-aware operation-level resilience only for explicitly safe operations. No blind transaction, write, transfer, or message replay; coordinate retry budgets and circuit breakers across layers.”
 
-**Evidence classification:** Direct numbered Option C user approval recovered in conversation extraction.
+**Requirements and scenarios:** EXP-003 SCN-006–011.
 
-## Related requirements and acceptance scenarios
+**Related decisions and refinements:** Decision 25 specifies coordinated deadlines and no Polly; it does not expand unsafe retry scope.
 
-EXP-003 SCN-006–011.
-
-The references above reflect the historical summary; for [POC-001 exact acceptance criteria](../requirements/POC-001.md) and conservative experimental mapping see [experiment traceability](../requirements/experiment-traceability.md). A scenario reference is planning traceability, not a test pass.
-
-## Related decisions and supersession
-
-Decision 25 specifies coordinated deadlines and no Polly; it does not expand unsafe retry scope.
-
-Unless the text above explicitly states a revision, no separate formally numbered superseding decision is evidenced by this source. Later decisions may narrow capabilities without repealing the selected architecture.
-
-## Evidence source
-
+**Sources:**
 - [Architecture discovery, original AD-020 extraction, lines 228–237](../archive/conversations/architecture-discovery.md#L228-L237)
 - [Cross-decision approval classification](decision-evidence.md)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)

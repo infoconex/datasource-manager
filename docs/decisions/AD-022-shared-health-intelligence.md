@@ -1,52 +1,42 @@
 # AD-022 — Local versus shared health
 
 **Status:** Approved in the architectural baseline; direct numbered Option C approval  
-**Approval evidence class:** Direct numbered Option C user approval recovered in conversation extraction.  
-**Decision title:** Editorial reconstruction from the approved architecture discussion; not asserted to be the exact historical heading.  
-**Implementation state:** Architectural plan only; no POC work executed as evidence of this decision.
+**Approval basis:** Direct numbered Option C user approval recovered in conversation extraction.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 Avoiding global blocking based on stale or untrusted observations.
+
+## Decision
+
+Local health and breaker decisions by default; optional scoped shared advisory observations; no automatic global blocking from stale/untrusted data; authoritative endpoint restrictions only by configuration policy; local operation continues if monitoring unavailable.
 
 ## Alternatives considered
 
 Options A/B unavailable.
 
-When the source reports missing original alternatives, no additional options are inferred.
-
-## Selected approach
-
-Local health and breaker decisions by default; optional scoped shared advisory observations; no automatic global blocking from stale/untrusted data; authoritative endpoint restrictions only by configuration policy; local operation continues if monitoring unavailable.
-
 ## Rationale
 
-A distant observation should not become an unreviewed enforcement decision (analytical summary).
+A stale or untrusted health observation from another host is insufficient grounds to block an otherwise authorized local acquisition. Shared signals can inform decisions, but enforcement requires the correct local evidence or authoritative configuration policy.
 
-## Consequences and security/compatibility limits
+## Consequences and limitations
 
-The selected approach is bounded by the recorded rationale and refinements, applicable organizational/security policy, provider capabilities, and the [approved architecture charter](../archive/charters/architecture-and-poc-execution-charter.md). Documented acceptance scenarios remain unexecuted; no broader guarantee is asserted.
+- Breakers and endpoint health decisions remain local by default; shared observations are scoped advisory inputs.
+- Stale remote data cannot create automatic global outages or cross-tenant blocking.
+- Monitoring failure does not by itself stop local operations; authoritative configured endpoint restrictions still apply.
 
-## Approval and historical evidence
+## Traceability
 
-“I approve Architecture Decision 22, Option C: local health and circuit-breaker decisions by default, optional scoped shared health intelligence for aggregation and advisory use, no automatic global blocking from untrusted or stale observations, authoritative endpoint restrictions through configuration policy, and continued operation without shared monitoring.”
+**Approval history:** “I approve Architecture Decision 22, Option C: local health and circuit-breaker decisions by default, optional scoped shared health intelligence for aggregation and advisory use, no automatic global blocking from untrusted or stale observations, authoritative endpoint restrictions through configuration policy, and continued operation without shared monitoring.”
 
-**Evidence classification:** Direct numbered Option C user approval recovered in conversation extraction.
+**Requirements and scenarios:** EXP-003 SCN-015–016.
 
-## Related requirements and acceptance scenarios
+**Related decisions and refinements:** Decision 27 defines failure-domain breaker isolation.
 
-EXP-003 SCN-015–016.
-
-The references above reflect the historical summary; for [POC-001 exact acceptance criteria](../requirements/POC-001.md) and conservative experimental mapping see [experiment traceability](../requirements/experiment-traceability.md). A scenario reference is planning traceability, not a test pass.
-
-## Related decisions and supersession
-
-Decision 27 defines failure-domain breaker isolation.
-
-Unless the text above explicitly states a revision, no separate formally numbered superseding decision is evidenced by this source. Later decisions may narrow capabilities without repealing the selected architecture.
-
-## Evidence source
-
+**Sources:**
 - [Architecture discovery, original AD-022 extraction, lines 248–257](../archive/conversations/architecture-discovery.md#L248-L257)
 - [Cross-decision approval classification](decision-evidence.md)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)

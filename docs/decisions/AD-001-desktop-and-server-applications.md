@@ -1,51 +1,43 @@
 # AD-001 — Desktop and server application support
 
 **Status:** Approved in the carried-forward architecture baseline  
-**Approval class:** User-selected alternative A, immediately recorded as Decision 1 approved by the assistant; not a user-specified numbered Option A approval.  
-**Historical source limitation:** The recovered early evidence is reported in retrospective conversation reviews; the earlier abbreviated discovery extraction did not contain the complete AD-001–AD-008 original messages.  
-**Implementation state:** Decision only; experiments remain unexecuted.
+**Approval basis:** User-selected alternative A, immediately recorded as Decision 1 approved by the assistant; not a user-specified numbered Option A approval.  
+**Verification:** Architecture only; no POC or experiment executed.
 
-## Context and problem
+## Context
 
 Whether the manager serves interactive desktop applications, server applications, or both.
+
+## Decision
+
+Both desktop and server applications; provider-qualified framework and OS capabilities.
 
 ## Alternatives considered
 
 A both desktop and server (**recommended**); B server only; C desktop only.
 
-## Selected approach
-
-Both desktop and server applications; provider-qualified framework and OS capabilities.
-
 ## Rationale
 
-One provider-neutral library can serve both hosting patterns. This does **not** guarantee each provider on every OS or framework; later AD-019/033/034 set a qualified compatibility matrix. Earlier macOS aspirations remain qualification work, not automatic support.
+A common management contract can serve interactive and unattended applications without duplicating provider policy. Hosting-model support is separate from evidence that a particular provider, runtime, operating system, or authentication mechanism is usable.
 
-## Consequences and limits
+## Consequences and limitations
 
-Implementation must honor the risk and capability qualifications stated above and in the subsequently approved security, routing, and compatibility decisions. No unexecuted test is counted as verification.
+- Consumers may use the same conceptual profile, authorization and acquisition model in desktop and server hosts.
+- Each provider/runtime/OS combination still needs its own compatibility and security qualification; the library's API alone does not establish support.
+- AD-019, AD-033 and AD-034 narrow the initially broad platform aspiration; macOS remains a qualification candidate.
 
-## Approval evidence
+## Traceability
 
-At 20:55:52Z Jim stated: “The library should support both desktop and server applications. Continue architecture discovery with the next decision.” At 20:56:02Z the assistant recorded “Decision 1 approved.” **Class:** user-selected plus assistant-recorded, **not** a literal numbered Option A approval.
+**Approval history:** At 20:55:52Z Jim stated: “The library should support both desktop and server applications. Continue architecture discovery with the next decision.” At 20:56:02Z the assistant recorded “Decision 1 approved.” **Class:** user-selected plus assistant-recorded, **not** a literal numbered Option A approval.
 
-**Classification:** User-selected alternative A, immediately recorded as Decision 1 approved by the assistant; not a user-specified numbered Option A approval.
+**Requirements and scenarios:** AD-019/033/034; POC-SCN-04, POC-SCN-21 (later topical links, **not original numbered trace**). No identified supersession.
 
-## Related requirements and acceptance scenarios
+**Historical evidence limit:** The recovered early evidence is reported in retrospective conversation reviews; the earlier abbreviated discovery extraction did not contain the complete AD-001–AD-008 original messages.  
 
-AD-019/033/034; POC-SCN-04, POC-SCN-21 (later topical links, **not original numbered trace**). No identified supersession.
-
-This is a topical relationship, not proof of a recovered original numbered test mapping. See [POC-001](../requirements/POC-001.md) and [historical experiment traceability](../requirements/experiment-traceability.md).
-
-## Related decisions and supersession
-
-AD-019/033/034; POC-SCN-04, POC-SCN-21 (later topical links, **not original numbered trace**). No identified supersession.
-
-No later source documents a formal repeal of this decision. The cited decisions refine or limit its application; original user wording is not silently rewritten.
-
-## Evidence sources
-
+**Sources:**
 - [Recovered early approval evidence](decision-evidence.md)
 - [Original abbreviated architecture discovery](../archive/conversations/architecture-discovery.md) (does **not** include the complete early transcripts)
 - [Early architecture history review](../archive/reviews/early-architecture-history-review.md) (retrospective source-specific recovery)
-- [Decision register](README.md)
+- [POC-001 acceptance scenarios](../requirements/POC-001.md)
+- [Experiment and POC traceability](../requirements/experiment-traceability.md)
+- [Approved architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md)
