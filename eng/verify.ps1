@@ -27,7 +27,8 @@ function Test-NuGetPackage {
         $names = @($archive.Entries | ForEach-Object { $_.FullName })
         $assemblies = @($names | Where-Object { $_ -like 'lib/netstandard2.0/*.dll' })
         $otherLibraries = @($names | Where-Object {
-            $_ -like 'lib/*.dll' -or ($_ -like 'lib/*/*.dll' -and $_ -notlike 'lib/netstandard2.0/*.dll')
+            $_ -match '^lib/[^/]+\.dll$' -or
+            ($_ -match '^lib/[^/]+/[^/]+\.dll$' -and $_ -notmatch '^lib/netstandard2\.0/')
         })
         if ($assemblies.Count -ne 1 -or $otherLibraries.Count -ne 0) {
             throw "Unexpected package framework asset layout: $PackagePath"
