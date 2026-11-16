@@ -2,16 +2,16 @@
 
 **Record date:** November 15, 2026 (Pacific time)  
 **Source:** [architecture-discovery extraction](../archive/conversations/architecture-discovery.md), [SQL recovery and compatibility extraction](../archive/conversations/recovery-and-compatibility.md), [final architecture review extraction](../archive/conversations/final-architecture-review.md), and the two [approved planning charters](../archive/charters/architecture-and-poc-execution-charter.md).  
-**Current disposition:** AD-001 through AD-035 and POC-001 were affirmed/approved by Jim. No experiment has run.
+**Current disposition:** Jim affirmed the overall AD-001–AD-035 architecture baseline and explicitly approved the final POC-001 charter; **individual historical approval strength varies**, notably the original AD-002 option has not been recovered. No experiment or POC scenario has run.
 
 ## Provenance rules
 
 1. This is a **reconciled index**, not invented verbatim ADRs. The three conversation files and two charters under `docs/archive/` are preserved unchanged as source evidence. Their original statuses reflect when they were written.
 2. An **inherited approval** means Jim explicitly carried forward the prior approved decision set; it does not establish a missing individual transcript. **Direct numbered approval** means the source conversation extraction quotes the user's numbered approval. **Conversational assent**, **blanket acceptance**, and **assistant-selected under delegation** are separate evidence strengths.
-3. The full original standalone wording for AD-001–AD-003 remains unavailable. AD-004–AD-008 have recovered *summaries*, but not all original alternatives/approval transcripts. AD-009–AD-033 have more extensive recoverable provenance; where a source flags an analytical summary rather than the original text, that qualification remains.
+3. The three subsequent [conversation-specific reviews](../archive/reviews/) recover earlier evidence for AD-001 and AD-003, the *proposal but not final disposition* of AD-002, and directly selected options/approvals for AD-004–AD-008 (including AD-007A/B/C). The reviews are **retrospective evidence**, not retroactively authored original ADRs. See the [decision evidence and qualification index](decision-evidence.md) for precise provenance and remaining gaps.
 4. AD-034, AD-035, and all 21 POC scenarios were first written in a charter labeled **proposed**. Jim's **later explicit approval** governs their current status; we preserve the historical proposed header unchanged. The [final-review extraction](../archive/conversations/final-architecture-review.md) documents that approval transition. This approval alone did not authorize executing experiments.
 5. `REQ-01` through `REQ-20` and `D-01` through `D-20` are **new traceability aliases** introduced in the consolidated charter, not recovered original requirement IDs.
-6. The recovered decision/topic names below are *editorial labels* drawn from the source extraction, not asserted historical titles. No unsupported original option wording or source attribution is manufactured.
+6. The recovered decision/topic names below are *editorial labels* drawn from conversation and review evidence, not asserted historical titles. No unsupported option wording or approval is manufactured. Historical `EXP-*` status and draft POC numbering are distinguished in the [experiment trace](../requirements/experiment-traceability.md).
 
 ## Decision inventory
 
@@ -19,14 +19,16 @@ All IDs below are currently in the **approved architectural baseline**. The evid
 
 | ID | Recovered subject (editorial) | Individual approval/source evidence |
 | --- | --- | --- |
-| AD-001 | Not recoverable | Inherited approval; original individual content unavailable |
-| AD-002 | Not recoverable | Inherited approval; original individual content unavailable |
-| AD-003 | Not recoverable | Inherited approval; original individual content unavailable |
-| AD-004 | Offline policy by profile and trust tier | Carry-forward approval; no direct original quote |
-| AD-005 | User/application identity and authorization | Carry-forward approval; no direct original quote |
-| AD-006 | Provider-appropriate authentication strategies | Carry-forward approval; no direct original quote |
-| AD-007 | 7A routing ownership; 7B topologies; 7C managed connection ownership | Carry-forward approvals; subdecisions recorded |
-| AD-008 | Layered capability API | Carry-forward approval; no direct original quote |
+| AD-001 | Desktop **and** server application scope | User-selected alternative A; assistant explicitly recorded Decision 1 approved |
+| AD-002 | Configuration and credential storage proposal | A/B/C proposal recovered; **original final selection unverified**; later design reframed storage boundaries |
+| AD-003 | Managed **and** customer-owned device trust tiers | Direct user requirement; assistant recorded Decision 3; numbered option vote not recovered |
+| AD-004 | Per-profile offline policy constrained by organizational ceiling | Direct user Option C approval; assistant linked to Decision 4 |
+| AD-005 | User/application identity and authorization | Direct numbered Option C approval |
+| AD-006 | Per-profile provider authentication strategies, separate from credential stores | Direct numbered Option C approval |
+| AD-007A | Hybrid provider-native-first routing ownership | Direct numbered Option C approval |
+| AD-007B | Coordinated topologies first; multi-primary conditional; sharding deferred | Direct numbered Option C approval |
+| AD-007C | Managed acquisition primary; **raw string export exceptional and authorized** | Direct numbered Option C approval; export outside POC-001 proof scope |
+| AD-008 | Focused core with optional provider capabilities | Direct numbered Option C approval |
 | AD-009 | Configuration ownership and overrides | Direct numbered Option C approval quoted |
 | AD-010 | Version-aware configuration synchronization | Direct numbered Option C approval quoted |
 | AD-011 | Trust-aware credential delivery | Direct numbered Option C approval quoted |
@@ -55,7 +57,7 @@ All IDs below are currently in the **approved architectural baseline**. The evid
 | AD-034 | .NET Framework 4.8 and .NET 10 framework policy | Formal approval after consolidated charter |
 | AD-035 | Optional coordination over provider-native pools | Formal approval after consolidated charter; implementation deferred |
 
-**Subdecision preservation:** AD-007 contains three recorded sub-identifiers: **7A** (routing ownership), **7B** (supported topologies), and **7C** (managed connections). Their original per-option wording is not fully available.
+**Subdecision preservation:** AD-007 contains three distinct, directly approved sub-identifiers **AD-007A**, **AD-007B**, and **AD-007C**. Their recovered alternatives and quotations are in [decision evidence](decision-evidence.md). **AD-007C raw connection-string export** is an explicitly authorized exceptional escape hatch; subsequent routing, lease tracking, revocation, and disposal cannot be guaranteed once a caller takes native control. This export path has **not** been validated or authorized for implementation by POC-001.
 
 **Compatibility clarification:** AD-033 establishes matrix-based qualification; AD-034 adds explicit framework commitments, including supported `.NET Framework 4.8/Windows` and `.NET 10/Windows+Linux`, `.NET 11` qualification, `.NET 8` best effort, and no `.NET 6` support.
 
@@ -63,7 +65,9 @@ All IDs below are currently in the **approved architectural baseline**. The evid
 
 ## Requirements and acceptance
 
+- [Decision evidence: original AD-001–008 alternatives, approvals and later decision-specific source links](decision-evidence.md).
 - [POC-001: exact 21 approved acceptance scenarios and traceability](../requirements/POC-001.md).
+- [EXP-001–004 planning and cross-experiment traceability](../requirements/experiment-traceability.md).
 - [Consolidated architecture and POC charter](../archive/charters/architecture-and-poc-execution-charter.md) §§ 5, 7–12: approved scope, `REQ-01..20` aliases, `D-01..20` deferrals, historical EXP-001..004 summaries, security stopping rules.
 - [POC-001 engineering kickoff](../archive/charters/poc-001-engineering-kickoff-charter.md) §§ 8–10: exact criteria, increment ownership, evidence, and I0–I6 sequence.
 - None of `EXP-001` through `EXP-004` was executed. Their broader obligations remain deferred, not cancelled.
@@ -75,7 +79,7 @@ All IDs below are currently in the **approved architectural baseline**. The evid
 3. Add a supersession reference in *both* old and new decisions; never silently edit historical reasoning.
 4. Link any resulting functional scenario to requirements, issue, test, evidence and verification status; use one issue and one PR per coherent increment.
 5. Do not claim a scenario passed until real evidence exists. Changes to approved security guarantees, framework support or POC scope require explicit renewed owner approval.
-6. Recover missing original AD-001–AD-008 primary records if located; add them as immutable references, then amend this index through review. The absence of verbatim originals is **open documentation debt**, not a reason to invent their contents.
+6. Preserve and check the recovered early review evidence against primary transcripts if available, especially the unresolved **AD-002 final option**, then amend this index through review. Unrecovered original option dispositions or scenario-to-ID mappings remain **open documentation debt**, not a reason to infer them.
 
 ## Boundaries
 

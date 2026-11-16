@@ -7,7 +7,9 @@ A secure, provider-neutral .NET library for centrally managed and locally config
 ## Architecture and requirements
 
 - [Architecture decision register (AD-001 through AD-035)](docs/decisions/README.md)
+- [Decision alternatives, approval evidence, and unresolved history](docs/decisions/decision-evidence.md)
 - [POC-001: all 21 acceptance scenarios and requirement traceability](docs/requirements/POC-001.md)
+- [EXP-001–004 historical scenario-to-POC cross-reference and deferrals](docs/requirements/experiment-traceability.md)
 - [Architecture and POC execution charter](docs/archive/charters/architecture-and-poc-execution-charter.md)
 - [POC-001 engineering kickoff charter](docs/archive/charters/poc-001-engineering-kickoff-charter.md)
 
@@ -19,7 +21,7 @@ The three extracts are retained as historical evidence, not rewritten as indepen
 - [SQL recovery and framework compatibility](docs/archive/conversations/recovery-and-compatibility.md)
 - [Final architecture review and charter approval](docs/archive/conversations/final-architecture-review.md)
 
-**Provenance warning:** The exact original wording of some early decisions is unavailable. The decision register identifies the gaps; it does not fabricate missing sources. Some archived charters retain their pre-approval `Proposed` headers, while later recorded owner approval governs their current status.
+**Provenance warning:** Three [subsequent historical review reports](docs/archive/reviews/) recover early AD-001/003 and AD-004–008 approval evidence that was missing from the original abbreviated extracts. The **original AD-002 final option remains unverified**, as do original EXP-001 scenario IDs and EXP-002's exact ID-to-text mapping. The evidence index distinguishes direct approval, inherited affirmation and delegated selection. The original five source files are retained **unchanged**. Some archived charters retain their original pre-approval `Proposed` headers; later recorded approval controls their current POC planning status.
 
 ## Planned POC-001
 
