@@ -2,7 +2,7 @@
 
 A secure, provider-neutral .NET library for centrally managed and locally configured data sources across trusted and customer-owned environments.
 
-**Status:** Architecture and POC-001 engineering planning approved. Implementation has not started; no POC scenarios have been executed. This repository currently holds the reviewable architectural baseline.
+**Status:** Architecture and POC-001 engineering planning approved. Engineering foundation is merged; I1's first no-provider acquisition contract is being verified for `POC-SCN-01`. No I1 scenario pass is asserted before CI and review.
 
 ## Architecture and requirements
 
@@ -40,5 +40,5 @@ Use one issue and one PR per coherent increment. Record new decisions, alternati
 
 The [engineering foundation index](docs/engineering/README.md) tracks project scaffolding, test and CI readiness, compatibility evidence and [foundation-only acceptance checks](docs/engineering/foundation-acceptance.md). The separate [security preflight](docs/security/threat-model.md) documents trust boundaries before any security behavior is implemented.
 
-Foundation package-load tests do **not** execute POC-001, prove provider compatibility or grant authorization to merge or publish.
+The [I1 acceptance evidence index](docs/requirements/POC-001.md#i1--poc-scn-01-req-01) distinguishes new acquisition-contract tests from the earlier foundation smoke. Neither the foundation nor I1 proves real-provider behavior or grants authorization to merge or publish. Independent security threat-model signoff is required **before I2** under the owner's narrow I0 exit-gate adjustment in [Issue #11](https://github.com/infoconex/datasource-manager/issues/11).
 

@@ -1,5 +1,7 @@
 using System;
 using System.Reflection;
+using System.Threading;
+using Manager = Infoconex.DataSourceManager.Core.Application.DataSourceManager;
 
 namespace Infoconex.DataSourceManager.Consumers
 {
@@ -18,7 +20,17 @@ namespace Infoconex.DataSourceManager.Consumers
                 Console.WriteLine("Loaded " + assembly.GetName().FullName);
             }
 
-            Console.WriteLine("net10 foundation package-load smoke passed; no POC capability was exercised.");
+            IDataSourceManager manager = new Manager();
+            var result = manager.AcquireAsync<object>(
+                new AcquisitionRequest("unregistered-provider", "test-profile"),
+                CancellationToken.None).GetAwaiter().GetResult();
+            if (result.Outcome != AcquisitionOutcome.UnsupportedProvider || result.Succeeded || result.Lease != null)
+            {
+                Console.Error.WriteLine("POC-SCN-01: expected typed UnsupportedProvider without a lease.");
+                return 1;
+            }
+
+            Console.WriteLine("POC-SCN-01: net10 zero-provider acquisition returned UnsupportedProvider.");
             return 0;
         }
     }

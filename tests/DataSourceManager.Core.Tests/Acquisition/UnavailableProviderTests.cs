@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Infoconex.DataSourceManager.Core.Application;
+using Manager = Infoconex.DataSourceManager.Core.Application.DataSourceManager;
 using NUnit.Framework;
 
 namespace Infoconex.DataSourceManager.Core.Tests.Acquisition
@@ -12,7 +12,7 @@ namespace Infoconex.DataSourceManager.Core.Tests.Acquisition
         [Test]
         public void CoreCanBeConstructedWithNoAdapters()
         {
-            IDataSourceManager manager = new DataSourceManager();
+            IDataSourceManager manager = new Manager();
 
             Assert.That(manager, Is.Not.Null);
         }
@@ -20,7 +20,7 @@ namespace Infoconex.DataSourceManager.Core.Tests.Acquisition
         [Test]
         public async Task UnregisteredProviderReturnsTypedUnsupportedOutcome()
         {
-            IDataSourceManager manager = new DataSourceManager();
+            IDataSourceManager manager = new Manager();
             var request = new AcquisitionRequest("not-registered", "test-profile");
 
             AcquisitionResult<object> result = await manager.AcquireAsync<object>(request, CancellationToken.None);
@@ -36,7 +36,7 @@ namespace Infoconex.DataSourceManager.Core.Tests.Acquisition
         [Test]
         public async Task ALoadableTypeDoesNotBecomeAnImplicitProvider()
         {
-            IDataSourceManager manager = new DataSourceManager();
+            IDataSourceManager manager = new Manager();
             var request = new AcquisitionRequest(typeof(UnregisteredProvider).FullName!, "test-profile");
 
             AcquisitionResult<object> result = await manager.AcquireAsync<object>(request, CancellationToken.None);

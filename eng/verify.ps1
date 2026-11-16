@@ -47,7 +47,7 @@ function Test-NuGetPackage {
         $dependencies = @($manifest.SelectNodes("//*[local-name()='dependency']") |
             ForEach-Object { $_.GetAttribute('id') })
         $forbiddenDependencies = @($dependencies | Where-Object {
-            $_ -match '^(?:Polly|Microsoft\.Extensions\.DependencyInjection|Microsoft\.Data\.SqlClient|Npgsql|MySqlConnector|SSH\.NET)'
+            $_ -match '^(?:Polly|Microsoft\.Extensions\.DependencyInjection|Microsoft\.Data\.(?:SqlClient|Sqlite)|System\.Data\.SQLite|Npgsql|MySqlConnector|MySql\.Data|Renci\.SshNet|SSH\.NET)'
         })
         if ($forbiddenDependencies.Count -gt 0) {
             throw "Forbidden core dependency in $PackagePath : $($forbiddenDependencies -join ', ')"
@@ -145,4 +145,5 @@ if ($Stage -eq 'WindowsLegacy' -or $Stage -eq 'All') {
     Invoke-Checked (Join-Path $repoRoot $legacyExecutable) @()
 }
 
-Write-Host "Foundation verification stage '$Stage' passed; no POC scenarios were exercised."
+Write-Host "Verification stage '$Stage' passed; POC-SCN-01 zero-provider contract exercised on applicable consumers."
+Write-Host 'This does not qualify real providers or complete POC-SCN-04.'

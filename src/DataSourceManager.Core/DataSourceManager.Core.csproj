@@ -5,7 +5,7 @@
     <RootNamespace>Infoconex.DataSourceManager</RootNamespace>
     <PackageId>Infoconex.DataSourceManager.Core</PackageId>
     <Version>0.0.1-foundation</Version>
-    <Description>Portable Data Source Manager policy and orchestration assembly (foundation only).</Description>
+    <Description>Portable Data Source Manager with explicit zero-provider acquisition behavior.</Description>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>true</IsPackable>
   </PropertyGroup>

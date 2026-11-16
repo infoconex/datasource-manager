@@ -5,7 +5,7 @@
     <RootNamespace>Infoconex.DataSourceManager</RootNamespace>
     <PackageId>Infoconex.DataSourceManager.Abstractions</PackageId>
     <Version>0.0.1-foundation</Version>
-    <Description>Portable Data Source Manager contract assembly (foundation only).</Description>
+    <Description>Portable provider-neutral Data Source Manager contracts.</Description>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>true</IsPackable>
   </PropertyGroup>

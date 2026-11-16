@@ -14,3 +14,9 @@ This document distinguishes a **foundation package-load smoke** from the provide
 
 Every future qualification cell must record SDK and runtime patches, OS/architecture, provider and native dependencies, TLS/authentication setup, restore/compile/load/operate/dispose separately. A pass for one provider must not be generalized to another; security guarantees fail closed if capabilities cannot be established.
 
+## I1 no-provider contract evidence
+
+I1 adds a real call to `IDataSourceManager.AcquireAsync<object>` in both packaged consumer harnesses. With zero registered adapters, the only expected result is typed `UnsupportedProvider`, `Succeeded == false` and a null lease. The result does not represent provider acquisition or disposal. Evidence and candidate CI results are tracked under [POC-SCN-01](../requirements/POC-001.md#i1--poc-scn-01-req-01).
+
+The existing foundation CI already runs the two consumers on Windows and Linux and runs the old-style C# 7.3 `net48` consumer on Windows. Its I1 results remain **pending** until the new candidate commit executes; the earlier foundation smoke must not be counted as an I1 pass. `POC-SCN-04` remains unexecuted.
+

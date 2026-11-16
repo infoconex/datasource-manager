@@ -15,8 +15,8 @@ namespace Infoconex.DataSourceManager.Core.Tests.Architecture
 
             Assert.That(core.GetName().Name, Is.EqualTo("DataSourceManager.Core"));
             Assert.That(abstractions.GetName().Name, Is.EqualTo("DataSourceManager.Abstractions"));
-            Assert.That(core.GetType("Infoconex.DataSourceManager.Core.Domain.FoundationAssemblyMarker"), Is.Not.Null);
-            Assert.That(abstractions.GetType("Infoconex.DataSourceManager.FoundationAssemblyMarker"), Is.Not.Null);
+            Assert.That(core.GetType("Infoconex.DataSourceManager.Core.Application.DataSourceManager"), Is.Not.Null);
+            Assert.That(abstractions.GetType("Infoconex.DataSourceManager.IDataSourceManager"), Is.Not.Null);
         }
 
         [Test]
@@ -24,7 +24,12 @@ namespace Infoconex.DataSourceManager.Core.Tests.Architecture
         {
             var core = System.Reflection.Assembly.Load("DataSourceManager.Core");
             var abstractions = System.Reflection.Assembly.Load("DataSourceManager.Abstractions");
-            var forbidden = new[] { "Microsoft.Data.SqlClient", "Npgsql", "MySqlConnector", "Polly", "SSH.NET", "Microsoft.Extensions.DependencyInjection" };
+            var forbidden = new[]
+            {
+                "Microsoft.Data.SqlClient", "Microsoft.Data.Sqlite", "System.Data.SQLite", "Npgsql",
+                "MySqlConnector", "MySql.Data", "Renci.SshNet", "Polly",
+                "Microsoft.Extensions.DependencyInjection"
+            };
 
             foreach (var assembly in new[] { core, abstractions })
             {
