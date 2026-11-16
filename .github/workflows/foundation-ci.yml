@@ -24,7 +24,7 @@ jobs:
           dotnet-version: |
             11.0.x
             10.0.x
-      - uses: NuGet/setup-nuget@12c57947e9458a5b976961b08ea0706a17dd71ae
+      - uses: NuGet/setup-nuget@b26b823c478ee115be5c9403e62c90b0bf943843
         if: runner.os == 'Windows'
       - name: Verify portable assemblies and packed consumer
         shell: pwsh
