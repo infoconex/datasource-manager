@@ -1,10 +1,12 @@
 # Architecture decision evidence and qualifications
 
 **Record updated:** November 15, 2026 (Pacific time)  
-**Scope:** AD-001–AD-035; supplements the [canonical decision register](README.md). **Documentation only**—no change to approved product scope or permission to implement.  
+**Scope:** Historical evidence supplement for AD-001–AD-035. **Each individual ADR, reached through the [canonical decision index](README.md), is the current decision record.** This document preserves retrospective source recovery and approval qualifications; it is **not** an alternative normative decision catalogue. Documentation only—no change to approved scope or implementation authorization.  
 **Evidence basis:** The [original discovery extraction](../archive/conversations/architecture-discovery.md), [recovery discussion](../archive/conversations/recovery-and-compatibility.md), and [final approval review](../archive/conversations/final-architecture-review.md), supplemented by [three conversation-specific historical reviews](../archive/reviews/). The latter recovered additional early transcript statements and times that **were not in the abbreviated original discovery extraction**. They are retrospective reports and must not be confused with the original transcript itself. Quotations below are from the reviews' reported original conversation evidence, not invented from the shorter archive.
 
 ## Reading approvals accurately
+
+Individual ADR titles are editorial descriptions, not necessarily historical verbatim headings. Decision-specific rationale and consequence text explains the approved scope; the preserved source records remain authoritative for original wording and approval evidence.
 
 - **Direct numbered approval:** Jim explicitly named the decision ID and selected option.
 - **User-selected + assistant-recorded:** Jim stated the requirement/choice and the immediate assistant response labeled the numbered decision approved; not an invented direct "I approve" vote.
@@ -17,6 +19,8 @@ Times in this early section are **UTC on November 15, 2026 as reported in the hi
 
 ## AD-001 — Desktop and server application support
 
+**Primary decision record:** [AD-001](AD-001-desktop-and-server-applications.md).
+
 - **Problem:** Whether the manager serves interactive desktop applications, server applications, or both.
 - **Recovered alternatives:** A both desktop and server (**recommended**); B server only; C desktop only.
 - **Selected approach:** Both application types, with provider-qualified platform support.
@@ -25,6 +29,8 @@ Times in this early section are **UTC on November 15, 2026 as reported in the hi
 - **Related scope:** AD-019/033/034; POC-SCN-04, POC-SCN-21 (later topical links, **not original numbered trace**). No identified supersession.
 
 ## AD-002 — Configuration and credential storage: original vote unverified, current Option A confirmed
+
+**Primary decision record:** [AD-002](AD-002-configuration-and-credential-storage.md).
 
 - **Problem:** Who owns configuration and credential persistence.
 - **Recovered *initial proposal* (20:56:02Z):** A pluggable storage (**recommended**); B built-in SQLite storage; C consumer-managed storage.
@@ -39,6 +45,8 @@ At 21:29:58Z Jim stated: “I choose Option C: support both multiple credential 
 
 ## AD-003 — Managed and customer-owned security contexts
 
+**Primary decision record:** [AD-003](AD-003-managed-and-customer-owned-devices.md).
+
 - **Problem:** One device trust assumption cannot safely apply to both managed and customer-owned environments.
 - **Recovered alternatives:** Individual original AD-003 alternative options not recovered; do **not** import AD-004 options here.
 - **Selected requirement:** At 21:23:30Z Jim stated: “The library must support both trusted managed systems and customer-owned systems. Continue the architecture discussion, explain the security implications, and ask the next question.” At 21:23:52Z the assistant recorded “Decision 3 recorded.”
@@ -48,6 +56,8 @@ At 21:29:58Z Jim stated: “I choose Option C: support both multiple credential 
 
 ## AD-004 — Organization-bounded per-profile offline policy
 
+**Primary decision record:** [AD-004](AD-004-offline-policy.md).
+
 - **Problem:** Balance offline continuity with delayed revocation and customer-owned risk.
 - **Recovered alternatives:** A configuration cache only, central access for new credential-dependent connections; B protected config/credential cache for offline access with delayed revocation; C policy-controlled per-profile offline authorization constrained by organization rules (**recommended**).
 - **Approval evidence:** At 21:31:03Z Jim stated: “I approve offline policy Option C: configurable per-profile offline policies, subject to organization-wide restrictions, with conservative defaults on customer-owned systems. Continue architecture discovery.” At 21:31:23Z the assistant acknowledged “Architecture Decision 4 approved.” **Class:** direct user Option C, immediate numbered attribution.
@@ -55,6 +65,8 @@ At 21:29:58Z Jim stated: “I choose Option C: support both multiple credential 
 - **Related scope:** POC-SCN-06/09; EXP-002 offline authorization topic. No reversal.
 
 ## AD-005 — Requester identity and organization/profile authorization
+
+**Primary decision record:** [AD-005](AD-005-identity-and-authorization.md).
 
 - **Problem:** Distinguish user, application and combined identity requirements for acquisition.
 - **Recovered alternatives:** A user identity (OIDC/OAuth2); B application/workload identity; C policy-driven user identity, application identity, or **both**.
@@ -64,6 +76,8 @@ At 21:29:58Z Jim stated: “I choose Option C: support both multiple credential 
 
 ## AD-006 — Multiple provider connection authentication strategies
 
+**Primary decision record:** [AD-006](AD-006-provider-authentication.md).
+
 - **Problem:** Provider protocols and deployment environments need different authentication mechanisms.
 - **Recovered alternatives:** A centrally managed credentials; B individual identity-based connections; C per-profile selection among multiple strategies.
 - **Approval evidence:** At 22:09:57Z Jim stated: “I approve Architecture Decision 6, Option C: multiple authentication strategies per connection profile, including shared credentials, user-specific credentials, integrated authentication, certificates, and passwordless identities where supported. Keep authentication strategies separate from credential stores and enforce security policies. Continue architecture discovery.” **Class:** direct numbered Option C.
@@ -71,6 +85,8 @@ At 21:29:58Z Jim stated: “I choose Option C: support both multiple credential 
 - **Related scope:** AD-011–013; POC-SCN-07/08/12; EXP-003 SCN-008. Later lifecycle decisions refine.
 
 ## AD-007A — Hybrid provider-native-first routing ownership
+
+**Primary decision record:** [AD-007A](AD-007A-routing-ownership.md).
 
 - **Problem:** Avoid replacing sound provider-native routing with a generic coordinator that lacks provider semantics.
 - **Recovered alternatives:** A provider-native only; B library-managed only; C hybrid/provider-native-first.
@@ -80,6 +96,8 @@ At 21:29:58Z Jim stated: “I choose Option C: support both multiple credential 
 
 ## AD-007B — Extensible but safety-first topology
 
+**Primary decision record:** [AD-007B](AD-007B-topology-model.md).
+
 - **Problem:** Scope initial failover and replica behavior without promising uncoordinated multi-writer correctness.
 - **Recovered alternatives:** A coordinated standalone/active-passive/primary-replica first; B all topologies including independently writable databases/sharding immediately; C extensible model implementing A first, allowing provider-managed multi-primary only with verified guarantees, deferring independently writable/sharded routing.
 - **Approval evidence:** At 22:15:38Z Jim stated: “I approve Architecture Decision 7B, Option C: an extensible topology model with safe coordinated topologies implemented first, provider-managed multi-primary support where appropriate, and future extensibility for independent databases and sharding.” **Class:** direct numbered Option C.
@@ -87,6 +105,8 @@ At 21:29:58Z Jim stated: “I choose Option C: support both multiple credential 
 - **Related scope:** EXP-003 SCN-001–005; D-15 (later POC deferral). No reversal.
 
 ## AD-007C — Managed acquisition with authorized raw-export exception
+
+**Primary decision record:** [AD-007C](AD-007C-managed-connections.md).
 
 - **Problem:** Preserve policy/lifecycle control while allowing exceptional legacy/native use.
 - **Recovered alternatives:** A connection strings as primary; B only managed connections; C managed connections primary, raw connection-string export only when explicitly authorized.
@@ -96,6 +116,8 @@ At 21:29:58Z Jim stated: “I choose Option C: support both multiple credential 
 
 ## AD-008 — Layered capability-based public API
 
+**Primary decision record:** [AD-008](AD-008-layered-capability-api.md).
+
 - **Problem:** One universal operational interface cannot honestly describe databases, file transfer, mail and SMB.
 - **Recovered alternatives:** A connection manager only; B universal provider-operations API; C focused core with optional provider-specific operational capabilities.
 - **Approval evidence:** At 22:17:03Z Jim stated: “I approve Architecture Decision 8, Option C: layered capability-based APIs, with a focused connection-management core and optional provider-specific operational capabilities.” **Class:** direct numbered Option C.
@@ -103,6 +125,8 @@ At 21:29:58Z Jim stated: “I choose Option C: support both multiple credential 
 - **Related scope:** AD-028/029/031; POC-SCN-01–03/11; EXP-004 SCN-001–005/010. No reversal.
 
 ## AD-009–AD-035 — Decision-specific archived evidence index
+
+Every one of these decisions now has a dedicated file linked from the [canonical register](README.md). The table below remains a **historical source locator** and evidence-classification aid, not a substitute for individual ADRs.
 
 For these IDs the indicated original extraction sections contain **problem, selected approach, rationale, approval category, downstream scenarios and refinement notes**. Where the extraction explicitly says "analytical summary" or "alternatives not preserved," that remains the qualification; the links do not manufacture missing transcripts.
 

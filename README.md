@@ -6,9 +6,11 @@ A secure, provider-neutral .NET library for centrally managed and locally config
 
 ## Architecture and requirements
 
-- [Architecture decision register (AD-001 through AD-035)](docs/decisions/README.md)
+**Every architectural decision has a dedicated ADR file.** The [decision index](docs/decisions/README.md) links to each record, including original alternatives where recovered, rationale, approval evidence, consequences, requirements, acceptance scenarios, and later refinements. The historical evidence supplement is archival context—not a competing canonical decision list.
+
+- [37 individual Architecture Decision Records (AD-001–AD-035, including AD-007A/B/C)](docs/decisions/README.md)
 - [AD-002 — approved refined storage decision and historical evidence](docs/decisions/AD-002-configuration-and-credential-storage.md)
-- [Decision alternatives, approval evidence, and unresolved history](docs/decisions/decision-evidence.md)
+- [Historical decision evidence supplement and approval qualifications](docs/decisions/decision-evidence.md)
 - [POC-001: all 21 acceptance scenarios and requirement traceability](docs/requirements/POC-001.md)
 - [EXP-001–004 historical scenario-to-POC cross-reference and deferrals](docs/requirements/experiment-traceability.md)
 - [Architecture and POC execution charter](docs/archive/charters/architecture-and-poc-execution-charter.md)
