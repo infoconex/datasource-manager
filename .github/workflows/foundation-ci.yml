@@ -18,13 +18,13 @@ jobs:
         os: [ubuntu-24.04, windows-2022]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
       - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1
         with:
           dotnet-version: |
             11.0.x
             10.0.x
-      - uses: NuGet/setup-nuget@d105a947828025cd7a980103c35ba2bfae586d0f
+      - uses: NuGet/setup-nuget@12c57947e9458a5b976961b08ea0706a17dd71ae
         if: runner.os == 'Windows'
       - name: Verify portable assemblies and packed consumer
         shell: pwsh
