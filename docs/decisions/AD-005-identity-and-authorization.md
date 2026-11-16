@@ -39,6 +39,8 @@ Profile and credential ownership are independent (AD-002, AD-009), as is provide
 
 This clarification neither mandates a central identity service for standalone applications nor changes POC scenario acceptance criteria, I2 authorization, or the independent security-review gate.
 
+**Subsequent governance note (November 16, 2026):** The separate [I2 review-gate amendment](../security/poc-001-i2-review-gate-amendment.md) later changed only the pre-I2 independent human signoff prerequisite. This November 15 AD-005 clarification did not itself make that change; the decision's authorization protections remain intact.
+
 ## Traceability
 
 **Approval history:** At 22:08:24Z Jim stated: “I approve Architecture Decision 5, Option C: policy-driven authentication supporting user identity, application identity, and both when required. Keep authentication provider-neutral and enforce organization and profile authorization.” **Class:** direct numbered Option C.

@@ -1,6 +1,6 @@
 # Security trust-boundary preflight (proposed)
 
-**Status:** Engineering readiness description only. No credential, authorization, connection, grant, lease or audit behavior is implemented here. Independent security reviewer and approval are still required before the corresponding POC increment.
+**Status:** Engineering readiness description only; no credential, authorization, connection, grant, lease or audit behavior is implemented here. The original independent human review prerequisite **before I2** was prospectively replaced by [Project Owner risk acceptance under six binding conditions](poc-001-i2-review-gate-amendment.md) on November 16, 2026. No independent human signoff is asserted. Later security controls and evidence gates remain in effect.
 
 ## Trust boundaries
 
@@ -20,4 +20,4 @@
 
 ## Explicit non-guarantees and review gate
 
-Absolute trusted time and secret protection **cannot** be guaranteed on a fully compromised offline host. A disconnected host cannot learn an unknown new revocation, and existing provider sessions may outlive credential revocation. These limitations must be reported, not hidden behind tests or abstract interfaces. Before implementing any affected functionality, assign an independent security reviewer, record the device/trusted-time/OS assumptions, and approve negative scenarios and minimum evidence. Failure to obtain a required property is a stop condition, never permission to weaken security quietly.
+Absolute trusted time and secret protection **cannot** be guaranteed on a fully compromised offline host. A disconnected host cannot learn an unknown new revocation, and existing provider sessions may outlive credential revocation. These limitations must be reported, not hidden behind tests or abstract interfaces. Before affected functionality is enabled, record device/trusted-time/OS assumptions, approve negative scenarios and minimum evidence, and apply the relevant [prospective I2 gate amendment](poc-001-i2-review-gate-amendment.md) or later security reassessment. Independent human review is recommended before production release; no such review is claimed here. Failure to obtain a required security property is a stop condition, never permission to weaken security quietly.
