@@ -32,6 +32,8 @@ Use **pluggable configuration and credential storage**, as **separate abstractio
 
 Configuration ownership, versioning, authorization, secret protection, credential distribution, rotation and device trust remain governed by AD-006 and AD-009 through AD-013, plus later offline and emergency security decisions. A pluggable adapter **cannot bypass** organizational/profile policy, trust requirements, expiry, auditing, revocation or fail-closed handling.
 
+**Ownership clarification (November 15, 2026):** Profile ownership and credential ownership are evaluated independently. A locally managed profile that references centrally managed credentials must satisfy the central credential authority's application-access policy. A centrally managed profile that uses application-controlled credentials must still honor its central configuration authority and any applicable profile-access policy. See [AD-005](AD-005-identity-and-authorization.md) and [AD-009](AD-009-configuration-ownership.md); these rules do not prescribe one storage or identity implementation.
+
 ## Rationale and consequences
 
 - The default ports-and-adapters/hexagonal design supports consumer-selected persistence without binding every user to SQLite or a hosted control plane.
