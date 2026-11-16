@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="NUnit" Version="4.6.1" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="6.3.1" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
+    <PackageVersion Include="Infoconex.DataSourceManager.Abstractions" Version="0.0.1-foundation" />
+    <PackageVersion Include="Infoconex.DataSourceManager.Core" Version="0.0.1-foundation" />
+  </ItemGroup>
+</Project>
+

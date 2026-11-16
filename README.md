@@ -35,3 +35,10 @@ No dependency on or integration with the separate Analytics Dashboard project is
 ## Governance
 
 Use one issue and one PR per coherent increment. Record new decisions, alternatives, owner approvals and supersessions in `docs/decisions/` before implementing dependent capabilities. Preserve traceability from approved requirements to scenarios, tests and actual evidence. Do not merge, execute experiments, release, or publish packages without separate owner authorization.
+
+## Engineering foundation (Issue #5)
+
+The [engineering foundation index](docs/engineering/README.md) tracks project scaffolding, test and CI readiness, compatibility evidence and [foundation-only acceptance checks](docs/engineering/foundation-acceptance.md). The separate [security preflight](docs/security/threat-model.md) documents trust boundaries before any security behavior is implemented.
+
+Foundation package-load tests do **not** execute POC-001, prove provider compatibility or grant authorization to merge or publish.
+

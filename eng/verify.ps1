@@ -1,0 +1,116 @@
+param(
+    [ValidateSet('Portable', 'WindowsLegacy', 'All')]
+    [string] $Stage = 'Portable'
+)
+
+$ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
+$PSNativeCommandUseErrorActionPreference = $true
+$repoRoot = Split-Path -Parent $PSScriptRoot
+Set-Location $repoRoot
+
+function Invoke-Checked {
+    param([string] $Executable, [string[]] $Arguments)
+
+    Write-Host "Running $Executable $($Arguments -join ' ')"
+    & $Executable @Arguments
+    if ($LASTEXITCODE -ne 0) {
+        throw "$Executable exited with $LASTEXITCODE"
+    }
+}
+
+function Test-NuGetPackage {
+    param([string] $PackagePath)
+
+    $archive = [System.IO.Compression.ZipFile]::OpenRead($PackagePath)
+    try {
+        $names = @($archive.Entries | ForEach-Object { $_.FullName })
+        $assemblies = @($names | Where-Object { $_ -like 'lib/netstandard2.0/*.dll' })
+        $otherLibraries = @($names | Where-Object {
+            $_ -like 'lib/*.dll' -or ($_ -like 'lib/*/*.dll' -and $_ -notlike 'lib/netstandard2.0/*.dll')
+        })
+        if ($assemblies.Count -ne 1 -or $otherLibraries.Count -ne 0) {
+            throw "Unexpected package framework asset layout: $PackagePath"
+        }
+        if (@($names | Where-Object { $_ -like '*.nuspec' }).Count -ne 1) {
+            throw "Expected one nuspec: $PackagePath"
+        }
+        Write-Host "Validated portable package $PackagePath"
+    }
+    finally {
+        $archive.Dispose()
+    }
+}
+
+$packageDirectory = Join-Path $repoRoot 'artifacts/packages'
+
+if ($Stage -eq 'Portable' -or $Stage -eq 'All') {
+    Invoke-Checked 'dotnet' @('--info')
+    New-Item -ItemType Directory -Force -Path $packageDirectory | Out-Null
+
+    foreach ($project in @(
+        'src/DataSourceManager.Abstractions/DataSourceManager.Abstractions.csproj',
+        'src/DataSourceManager.Core/DataSourceManager.Core.csproj'
+    )) {
+        Invoke-Checked 'dotnet' @('restore', $project)
+        Invoke-Checked 'dotnet' @('build', $project, '-c', 'Release', '--no-restore')
+        Invoke-Checked 'dotnet' @('pack', $project, '-c', 'Release', '--no-restore', '--output', $packageDirectory,
+            '-p:IncludeSymbols=true', '-p:SymbolPackageFormat=snupkg')
+    }
+
+    $packages = @(Get-ChildItem -LiteralPath $packageDirectory -Filter '*.nupkg' -File)
+    if ($packages.Count -ne 2) {
+        throw "Expected exactly two local foundation packages, found $($packages.Count)"
+    }
+    foreach ($package in $packages) {
+        Test-NuGetPackage $package.FullName
+        $hash = Get-FileHash -Algorithm SHA256 -LiteralPath $package.FullName
+        Write-Host "SHA256 $($package.Name): $($hash.Hash)"
+    }
+    $symbols = @(Get-ChildItem -LiteralPath $packageDirectory -Filter '*.snupkg' -File)
+    if ($symbols.Count -ne 2) {
+        throw "Expected two portable symbol packages, found $($symbols.Count)"
+    }
+
+    $modernConsumer = 'tests/Consumers/Net10Consumer/Net10Consumer.csproj'
+    Invoke-Checked 'dotnet' @('restore', $modernConsumer, '--source', $packageDirectory,
+        '--source', 'https://api.nuget.org/v3/index.json')
+    Invoke-Checked 'dotnet' @('run', '--project', $modernConsumer, '-c', 'Release', '--no-restore')
+
+    $unitTests = 'tests/DataSourceManager.Core.Tests/DataSourceManager.Core.Tests.csproj'
+    Invoke-Checked 'dotnet' @('restore', $unitTests)
+    Invoke-Checked 'dotnet' @('test', $unitTests, '-c', 'Release', '--no-restore', '--logger', 'trx')
+}
+
+if ($Stage -eq 'WindowsLegacy' -or $Stage -eq 'All') {
+    if (-not $IsWindows) {
+        throw 'WindowsLegacy verification requires Windows with .NET Framework 4.8.'
+    }
+    if (-not (Test-Path -LiteralPath $packageDirectory)) {
+        throw 'Run Portable package verification first.'
+    }
+
+    $legacyProject = 'tests/Consumers/Net48LegacyConsumer/Net48LegacyConsumer.csproj'
+    $legacyPackages = 'tests/Consumers/Net48LegacyConsumer/packages.config'
+    Invoke-Checked 'nuget' @('restore', $legacyPackages, '-PackagesDirectory', 'packages',
+        '-Source', "$packageDirectory;https://api.nuget.org/v3/index.json", '-NonInteractive')
+
+    $vsWhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
+    if (-not (Test-Path -LiteralPath $vsWhere)) {
+        throw 'Visual Studio MSBuild discovery utility is missing.'
+    }
+    $msbuild = @(& $vsWhere -latest -products '*' -requires Microsoft.Component.MSBuild -find 'MSBuild\**\Bin\MSBuild.exe') |
+        Select-Object -First 1
+    if (-not $msbuild) {
+        throw 'A supported Windows MSBuild installation was not found.'
+    }
+    Invoke-Checked $msbuild @($legacyProject, '/t:Build', '/p:Configuration=Release', '/p:Platform=AnyCPU', '/verbosity:minimal')
+
+    $legacyExecutable = 'tests/Consumers/Net48LegacyConsumer/bin/Release/Net48LegacyConsumer.exe'
+    if (-not (Test-Path -LiteralPath $legacyExecutable)) {
+        throw 'Expected the legacy .NET Framework 4.8 executable.'
+    }
+    Invoke-Checked (Join-Path $repoRoot $legacyExecutable) @()
+}
+
+Write-Host "Foundation verification stage '$Stage' passed; no POC scenarios were exercised."
