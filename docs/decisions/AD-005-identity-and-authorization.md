@@ -26,6 +26,19 @@ The requesting principal varies by application: some operations are authorized f
 - Authorization failure remains distinct from SQL, SFTP or other provider authentication failure.
 - Provider credentials cannot serve as proof that the requester is entitled to use a profile.
 
+## Clarification — conditional authorization and distinct ownership (November 15, 2026)
+
+**Prospective owner direction:** Support both local and centrally managed profiles; restrict centrally managed credentials to approved applications; enforce tenant-to-profile restrictions only when configured or required by policy. This clarifies approved Option C without rewriting its original approval evidence.
+
+- For application-owned profiles using application-controlled provider authentication, no separate Data Source Manager requester authorization is required **unless an applicable policy requires it**. The destination provider still authenticates the connection and enforces its permissions.
+- Centrally managed credentials may be accessed or delivered **only to applications/workloads approved by the credential authority**, with user identity also required when policy specifies. A locally managed profile cannot bypass this control.
+- Centrally managed profiles retain authoritative security and override rules even when provider credentials are application-controlled. Tenant-to-profile restrictions are enforced when configured or mandated, not universally.
+- Missing or unverifiable **required** identity, entitlement or policy fails closed. Registration, profile IDs and provider credentials never override an applicable manager authorization rule.
+
+Profile and credential ownership are independent (AD-002, AD-009), as is provider authentication (AD-006). An in-process library cannot prevent an application from directly using credentials it already possesses; central credential access therefore needs protection at the delivery boundary.
+
+This clarification neither mandates a central identity service for standalone applications nor changes POC scenario acceptance criteria, I2 authorization, or the independent security-review gate.
+
 ## Traceability
 
 **Approval history:** At 22:08:24Z Jim stated: “I approve Architecture Decision 5, Option C: policy-driven authentication supporting user identity, application identity, and both when required. Keep authentication provider-neutral and enforce organization and profile authorization.” **Class:** direct numbered Option C.

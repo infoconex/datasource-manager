@@ -25,6 +25,7 @@ Central administrators need control over centrally managed profile security sett
 - Centrally managed profiles activate from protected read-only local copies and cannot be locally rewritten as authoritative policy.
 - Standalone profiles remain locally managed under their own documented trust model.
 - Only permitted non-security settings may be overridden; ownership and authority must remain visible.
+- Profile ownership and credential ownership are separate: central profile security settings cannot be weakened by application-provided credentials, and a local profile cannot bypass access controls on centrally managed credentials. Requester and tenant-to-profile restrictions apply when configured or mandated by policy, as clarified in [AD-005](AD-005-identity-and-authorization.md), while provider authentication remains governed by [AD-006](AD-006-provider-authentication.md).
 
 ## Traceability
 
