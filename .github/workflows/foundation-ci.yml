@@ -1,0 +1,36 @@
+name: Foundation CI
+
+on:
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  portable:
+    name: Portable build, package, consumer, NUnit (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1
+        with:
+          dotnet-version: |
+            11.0.x
+            10.0.x
+      - uses: NuGet/setup-nuget@12c57947e9458a5b976961b08ea0706a17dd71ae
+        if: runner.os == 'Windows'
+      - name: Verify portable assemblies and packed consumer
+        shell: pwsh
+        run: ./eng/verify.ps1 -Stage Portable
+      - name: Verify actual legacy .NET Framework 4.8 consumer
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./eng/verify.ps1 -Stage WindowsLegacy
+

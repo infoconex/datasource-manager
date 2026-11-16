@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DataSourceManager.Abstractions/DataSourceManager.Abstractions.csproj" />
+    <Project Path="src/DataSourceManager.Core/DataSourceManager.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DataSourceManager.Core.Tests/DataSourceManager.Core.Tests.csproj" />
+    <Project Path="tests/Consumers/Net48LegacyConsumer/Net48LegacyConsumer.csproj" />
+    <Project Path="tests/Consumers/Net10Consumer/Net10Consumer.csproj" />
+  </Folder>
+</Solution>
+

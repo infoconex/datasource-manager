@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A2A18D8A-9715-4434-8D7A-50C2BA8D8E8B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Infoconex.DataSourceManager.Consumers</RootNamespace>
+    <AssemblyName>Net48LegacyConsumer</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>7.3</LangVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="DataSourceManager.Abstractions">
+      <HintPath>..\..\..\packages\Infoconex.DataSourceManager.Abstractions.0.0.1-foundation\lib\netstandard2.0\DataSourceManager.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DataSourceManager.Core">
+      <HintPath>..\..\..\packages\Infoconex.DataSourceManager.Core.0.0.1-foundation\lib\netstandard2.0\DataSourceManager.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
+

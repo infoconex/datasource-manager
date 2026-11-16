@@ -1,0 +1,25 @@
+name: Dependency review
+
+on:
+  pull_request:
+    paths:
+      - '**/*.csproj'
+      - '**/packages.config'
+      - 'Directory.Packages.props'
+      - 'nuget.config'
+      - '.github/workflows/*.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48
+        with:
+          fail-on-severity: high
+

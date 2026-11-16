@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>DataSourceManager.Abstractions</AssemblyName>
+    <RootNamespace>Infoconex.DataSourceManager</RootNamespace>
+    <PackageId>Infoconex.DataSourceManager.Abstractions</PackageId>
+    <Version>0.0.1-foundation</Version>
+    <Description>Portable Data Source Manager contract assembly (foundation only).</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+</Project>
+
