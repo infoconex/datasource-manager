@@ -11,6 +11,8 @@ The executable checks are:
 
 GitHub Actions runs the same scripts. `global.json` pins .NET 11 SDK feature-band with servicing roll-forward; SDK choice **does not** elevate .NET 11 to official runtime support. Modern consumers target .NET 10. The legacy consumer is deliberately non-SDK and C# 7.3; it cannot be tested on Linux by compiling a `netstandard2.0` library.
 
+Package-load consumers use the dedicated `eng/consumer.nuget.config` only after local packages have been produced. It maps `Infoconex.DataSourceManager.*` to the local package feed and leaves the root configuration independent of temporary test artifacts.
+
 Dependency review, CodeQL and NuGet's restore audit provide separate signals. GitHub secret scanning and push protection are repository settings, not tests and not asserted active merely because they are recommended. No CI job runs SQL, SFTP, or other external providers.
 
 ## Initial evidence ledger

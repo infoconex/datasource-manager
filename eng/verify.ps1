@@ -44,6 +44,7 @@ function Test-NuGetPackage {
 }
 
 $packageDirectory = Join-Path $repoRoot 'artifacts/packages'
+$consumerConfig = Join-Path $repoRoot 'eng/consumer.nuget.config'
 
 if ($Stage -eq 'Portable' -or $Stage -eq 'All') {
     Invoke-Checked 'dotnet' @('--info')
@@ -74,8 +75,7 @@ if ($Stage -eq 'Portable' -or $Stage -eq 'All') {
     }
 
     $modernConsumer = 'tests/Consumers/Net10Consumer/Net10Consumer.csproj'
-    Invoke-Checked 'dotnet' @('restore', $modernConsumer, '--source', $packageDirectory,
-        '--source', 'https://api.nuget.org/v3/index.json')
+    Invoke-Checked 'dotnet' @('restore', $modernConsumer, '--configfile', $consumerConfig)
     Invoke-Checked 'dotnet' @('run', '--project', $modernConsumer, '-c', 'Release', '--no-restore')
 
     $unitTests = 'tests/DataSourceManager.Core.Tests/DataSourceManager.Core.Tests.csproj'
@@ -94,7 +94,7 @@ if ($Stage -eq 'WindowsLegacy' -or $Stage -eq 'All') {
     $legacyProject = 'tests/Consumers/Net48LegacyConsumer/Net48LegacyConsumer.csproj'
     $legacyPackages = 'tests/Consumers/Net48LegacyConsumer/packages.config'
     Invoke-Checked 'nuget' @('restore', $legacyPackages, '-PackagesDirectory', 'packages',
-        '-Source', "$packageDirectory;https://api.nuget.org/v3/index.json", '-NonInteractive')
+        '-ConfigFile', $consumerConfig, '-NonInteractive')
 
     $vsWhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
     if (-not (Test-Path -LiteralPath $vsWhere)) {
