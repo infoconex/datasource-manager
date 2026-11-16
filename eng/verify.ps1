@@ -36,6 +36,31 @@ function Test-NuGetPackage {
         if (@($names | Where-Object { $_ -like '*.nuspec' }).Count -ne 1) {
             throw "Expected one nuspec: $PackagePath"
         }
+        $nuspecEntry = @($archive.Entries | Where-Object { $_.FullName -like '*.nuspec' })[0]
+        $reader = [System.IO.StreamReader]::new($nuspecEntry.Open())
+        try {
+            [xml] $manifest = $reader.ReadToEnd()
+        }
+        finally {
+            $reader.Dispose()
+        }
+        $dependencies = @($manifest.SelectNodes("//*[local-name()='dependency']") |
+            ForEach-Object { $_.GetAttribute('id') })
+        $forbiddenDependencies = @($dependencies | Where-Object {
+            $_ -match '^(?:Polly|Microsoft\.Extensions\.DependencyInjection|Microsoft\.Data\.SqlClient|Npgsql|MySqlConnector|SSH\.NET)'
+        })
+        if ($forbiddenDependencies.Count -gt 0) {
+            throw "Forbidden core dependency in $PackagePath : $($forbiddenDependencies -join ', ')"
+        }
+        if ($PackagePath -like '*DataSourceManager.Core.*' -and
+            $dependencies -notcontains 'Infoconex.DataSourceManager.Abstractions') {
+            throw 'Core package must depend on portable Abstractions.'
+        }
+        if ($PackagePath -like '*DataSourceManager.Abstractions.*' -and
+            $dependencies -contains 'Infoconex.DataSourceManager.Core') {
+            throw 'Abstractions must not depend on Core.'
+        }
+        Write-Host "Package dependencies: $($dependencies -join ', ')"
         Write-Host "Validated portable package $PackagePath"
     }
     finally {
@@ -48,6 +73,7 @@ $consumerConfig = Join-Path $repoRoot 'eng/consumer.nuget.config'
 
 if ($Stage -eq 'Portable' -or $Stage -eq 'All') {
     Invoke-Checked 'dotnet' @('--info')
+    Invoke-Checked 'dotnet' @('sln', 'DataSourceManager.slnx', 'list')
     $sourceEpoch = (& git log -1 --format=%ct).Trim()
     if ($sourceEpoch -notmatch '^[0-9]+$') {
         throw 'A Git commit timestamp is required for deterministic package creation.'
