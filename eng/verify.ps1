@@ -48,6 +48,11 @@ $consumerConfig = Join-Path $repoRoot 'eng/consumer.nuget.config'
 
 if ($Stage -eq 'Portable' -or $Stage -eq 'All') {
     Invoke-Checked 'dotnet' @('--info')
+    $sourceEpoch = (& git log -1 --format=%ct).Trim()
+    if ($sourceEpoch -notmatch '^[0-9]+$') {
+        throw 'A Git commit timestamp is required for deterministic package creation.'
+    }
+    Write-Host "Package deterministic timestamp (commit epoch): $sourceEpoch"
     New-Item -ItemType Directory -Force -Path $packageDirectory | Out-Null
 
     foreach ($project in @(
@@ -57,7 +62,7 @@ if ($Stage -eq 'Portable' -or $Stage -eq 'All') {
         Invoke-Checked 'dotnet' @('restore', $project)
         Invoke-Checked 'dotnet' @('build', $project, '-c', 'Release', '--no-restore')
         Invoke-Checked 'dotnet' @('pack', $project, '-c', 'Release', '--no-restore', '--output', $packageDirectory,
-            '-p:IncludeSymbols=true', '-p:SymbolPackageFormat=snupkg')
+            '-p:IncludeSymbols=true', '-p:SymbolPackageFormat=snupkg', "-p:DeterministicTimestamp=$sourceEpoch")
     }
 
     $packages = @(Get-ChildItem -LiteralPath $packageDirectory -Filter '*.nupkg' -File)
